@@ -1,0 +1,42 @@
+//利用宏实现属性set和get
+#define GetSetNameOfProperty(type, name, access_permission)\
+    access_permission: \
+    type m_##name; \
+    public: \
+    inline void set##name(type v){\
+    m_##name = v;\
+    }\
+    inline type get##name() {\
+    return m_##name;\
+    }
+
+#ifndef MYQLISTWIDGETITEM_H
+#define MYQLISTWIDGETITEM_H
+#include <QListWidgetItem>
+#include <QListWidget>
+#include <vector>
+#include "personlist.h"
+class MyQlistWidgetItem: public QListWidgetItem
+{
+public:
+    MyQlistWidgetItem(const QString GroundName, QListWidget* itemlist);
+
+public:
+    void setGroundId(int id);
+    Person getPerson(int id);
+    void AddPerson(int id);
+    void 
+private:
+    int GroundId;
+    vector<PersonList> Personlist;
+
+
+GetSetNameOfProperty (std::string, GroundName, private)
+GetSetNameOfProperty (std::string, ImageUrl, private)
+GetSetNameOfProperty(bool,IsHidden,private)
+
+};
+#endif // MYQLISTWIDGETITEM_H
+
+
+
