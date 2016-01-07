@@ -12,30 +12,37 @@
 
 #ifndef PERSONGROUNDITEM_H
 #define PERSONGROUNDITEM_H
-#include <QListWidgetItem>
+
 #include <QListWidget>
 #include <list>
-#include "personlist.h"
 #include "person.h"
-
+#include "QLabel"
 using namespace std;
-class PersonGroundItem: public QListWidgetItem
+class PersonGroundItem: public QWidget
 {
+
 public:
-    PersonGroundItem(const QString GroundName, QListWidget* itemlist);
+      PersonGroundItem(int UserId, char* UesrName, char* SiginWord, char* IamgeUrl="",QWidget *parent=0);
 
 public:
     void AddPerson(Person const Personid);
     void DelPerson(Person const Personid);
-    bool operator ==(PersonGroundItem other);
+    bool operator ==(const PersonGroundItem& other);
     list<Person>& getPersonList();
-    int getgroundId();
+    int getgroundId() const;
+    bool eventFilter(QObject *obj, QEvent *event);//事件过滤器
+
+    protected:
+    void mouseDoubleClickEvent (QMouseEvent *event);
 private:
-    int GroundId;
+    int UserId;
     std::list<Person> personlist;
+    QLabel *UserName;  //用户名
+    QLabel *SiginWord;  //个性签名
+    QWidget *PersonImage;//用户头像
+    string ImageUrl;
 
-
-
+GetSetNameOfProperty (std::string, IPAddress, private)
 GetSetNameOfProperty (std::string, GroundName, private)
 GetSetNameOfProperty (std::string, ImageUrl, private)
 GetSetNameOfProperty(bool,IsHidden,private)

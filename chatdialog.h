@@ -14,6 +14,8 @@ class ChatDialog : public QDialog
 public:
     explicit ChatDialog(QWidget *parent = 0);
     ~ChatDialog();
+     void SendMessage();
+     void UpdateMessage();
 
 private:
     Ui::ChatDialog *ui;

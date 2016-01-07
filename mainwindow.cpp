@@ -11,7 +11,6 @@
 #include "QVBoxLayout"
 #include "QHBoxLayout"
 #include "persongrounditem.h"
-
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
    StaticMainWindow();
+   GroundList->show();
 
 }
 
@@ -42,6 +42,8 @@ StaticList(StaticLists);
  layout->addItem(Hlayout);
  layout->addItem(StaticLists);
 ui->centralWidget->setLayout(layout);
+ui->centralWidget->show();
+this->show();
  return true ;
 }
 
@@ -49,18 +51,43 @@ ui->centralWidget->setLayout(layout);
 //获取组信息
 bool MainWindow::StaticList( QVBoxLayout* layout){
 
-
-
-
-
-     for (int i =0; i<=10;i++)
+     layout->addWidget(GroundList);
+     for (int i =0; i<=1;i++)
      {
-    PersonGroundItem*  test = new PersonGroundItem("friends",GroundList);
+          QListWidgetItem* v= new QListWidgetItem();
+         v->setSizeHint(QSize(100,120));
+
+         GroundList->insertItem(i,v);
+
+    PersonGroundItem*  test = new PersonGroundItem(i,"fd","erf");
+
+ //  GroundList->setItemWidget(v,test);
+
+test->show();
+GroundList->show();
+
+//    QWidget *mw = new QWidget();
+//    QPalette palette = mw->palette();
+//    palette.setBrush(mw->backgroundRole(), QBrush(QPixmap("/home/zoring/test/1.png")));
+//    mw->setPalette(palette);
+
+
+//  ///  layout->addWidget(PersonImage);
+
+
+////    mw->setPalette(palette);
+//    mw->resize(40, 40);
+//    mw->setAutoFillBackground(true);
+
+//    //mw->setWindowFlags(Qt::FramelessWindowHint);
+//    mw->show();
 
    // QObject::connect(test,&QPushButton::clicked,this,StaticGround);
      }
-     new PersonGroundItem("tefdst",GroundList);
-     layout->addWidget(GroundList);
+    
+
+
+
      return true;
 
 }
@@ -68,12 +95,7 @@ bool MainWindow::StaticList( QVBoxLayout* layout){
 //获取好友列表信息
 bool MainWindow::StaticGround(string keys){
 
-    for (std::list<PersonGroundItem>::iterator iter = Grouds.begin(); iter != Grouds.end(); ++iter) {
-         if(!(*iter).getIsHidden())
-         {
-              return true ;
-         }
-    }
+
     return true;
 
 }
@@ -81,8 +103,7 @@ bool MainWindow::StaticGround(string keys){
 //添加新的组
 bool MainWindow::AddGround(string GroundName){
     QString QGroundName = QString(QString::fromLocal8Bit(GroundName.c_str()));
-     PersonGroundItem*  NewGround = new PersonGroundItem(QGroundName,GroundList);
-     Grouds.push_back(*NewGround);
+
 
 
 }

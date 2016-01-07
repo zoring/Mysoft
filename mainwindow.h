@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include <QListWidgetItem>
 #include <QMainWindow>
 #include <QVBoxLayout>
 #include <QListWidget>
@@ -25,8 +25,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    int groundId;
-    QListWidget*  GroundList = new QListWidget();
+    int UserId;
+    QListWidget*  GroundList = new QListWidget(this);
     std::list<PersonGroundItem> Grouds;   // 组容器
     bool StaticList( QVBoxLayout* layout);
     bool StaticGround(std::string keys);

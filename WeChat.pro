@@ -18,7 +18,9 @@ SOURCES += main.cpp\
     frienddialog.cpp \
     personlist.cpp \
     person.cpp \
-    persongrounditem.cpp
+    persongrounditem.cpp \
+    persondata.cpp \
+    chatdialog.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -26,9 +28,12 @@ HEADERS  += mainwindow.h \
     frienddialog.h \
     personlist.h \
     person.h \
-    persongrounditem.h
+    persongrounditem.h \
+    persondata.h \
+    chatdialog.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
     resigndialog.ui \
-    frienddialog.ui
+    frienddialog.ui \
+    chatdialog.ui

@@ -6,6 +6,7 @@ ChatDialog::ChatDialog(QWidget *parent) :
     ui(new Ui::ChatDialog)
 {
     ui->setupUi(this);
+
 }
 
 ChatDialog::~ChatDialog()
