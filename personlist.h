@@ -1,11 +1,17 @@
 #ifndef PERSONLIST_H
 #define PERSONLIST_H
-#include "person.h"
 
-class PersonList
+#include <QObject>
+
+class PersonList : public QObject
 {
+    Q_OBJECT
 public:
-    PersonList();
+    explicit PersonList(QObject *parent = 0);
+
+signals:
+
+public slots:
 };
 
 #endif // PERSONLIST_H

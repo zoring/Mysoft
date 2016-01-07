@@ -1,6 +1,6 @@
 #include "personlist.h"
 
-PersonList::PersonList()
+PersonList::PersonList(QObject *parent) : QObject(parent)
 {
 
 }
