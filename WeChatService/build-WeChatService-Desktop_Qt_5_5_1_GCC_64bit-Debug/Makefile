@@ -36,7 +36,7 @@ DISTNAME      = WeChatService1.0.0
 DISTDIR = /home/zoring/WeChat/WeChatService/build-WeChatService-Desktop_Qt_5_5_1_GCC_64bit-Debug/.tmp/WeChatService1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/zoring/Qt5.5.1/5.5/gcc_64
-LIBS          = $(SUBLIBS) -lboost_system 
+LIBS          = $(SUBLIBS) -lboost_system -lboost_thread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -49,9 +49,15 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../WeChatService/main.cpp \
-		../WeChatService/wechatservice.cpp 
+		../WeChatService/wechatservice.cpp \
+		../WeChatService/userservice.cpp \
+		../WeChatService/userdb.cpp \
+		../WeChatService/basedb.cpp 
 OBJECTS       = main.o \
-		wechatservice.o
+		wechatservice.o \
+		userservice.o \
+		userdb.o \
+		basedb.o
 DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -181,8 +187,14 @@ DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/lex.prf \
-		../WeChatService/WeChatService.pro wechatservice.h ../WeChatService/main.cpp \
-		../WeChatService/wechatservice.cpp
+		../WeChatService/WeChatService.pro wechatservice.h \
+		userservice.h \
+		userdb.h \
+		basedb.h ../WeChatService/main.cpp \
+		../WeChatService/wechatservice.cpp \
+		../WeChatService/userservice.cpp \
+		../WeChatService/userdb.cpp \
+		../WeChatService/basedb.cpp
 QMAKE_TARGET  = WeChatService
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = WeChatService
@@ -519,6 +531,15 @@ main.o: ../WeChatService/main.cpp
 
 wechatservice.o: ../WeChatService/wechatservice.cpp ../WeChatService/wechatservice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wechatservice.o ../WeChatService/wechatservice.cpp
+
+userservice.o: ../WeChatService/userservice.cpp ../WeChatService/userservice.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userservice.o ../WeChatService/userservice.cpp
+
+userdb.o: ../WeChatService/userdb.cpp ../WeChatService/userdb.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userdb.o ../WeChatService/userdb.cpp
+
+basedb.o: ../WeChatService/basedb.cpp ../WeChatService/basedb.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o basedb.o ../WeChatService/basedb.cpp
 
 ####### Install
 
