@@ -8,9 +8,9 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
 }
 
 void WeChatService::StaticConnetion(){
-    StartMsgService();
-    //boost::thread(StartMsgService);
-    //boost::thread(&StartFuntionService);
+
+    boost::thread(boost::bind(&WeChatService::StartMsgService,this)).join();
+   // boost::thread(boost::bind(&WeChatService::StartMsgService,this)).join();
 }
 
 //多线程ｒｕｎ
@@ -38,17 +38,24 @@ void WeChatService::ReadIndividualMessage(Tcp_Socket_ptr ReadSocket, boost::syst
     if(ec) return;
     char*  messageBuffers= new char[1024];
     cout<<"fdsf"<<endl;
-    ReadSocket->async_read_some(buffer(messageBuffers),boost::bind(&WeChatService::HandleRead,this,messageBuffers,_1,_2));
+    ReadSocket->async_read_some(buffer(messageBuffers,1024),boost::bind(&WeChatService::HandleRead,this,ReadSocket,messageBuffers,_1,_2));
 
 }
 
 
-void WeChatService::HandleRead(char* MessageBuffers,const boost::system::error_code &e, size_t bytes){
+void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char MessageBuffers[],const boost::system::error_code &e, size_t bytes){
    cout<<bytes<<endl;
     if (bytes == 0)
         return;
-   cout<<"MessageBuffer";
+    //读数据处理
+    for (size_t index=0; index < bytes;++index)
+    {cout<<MessageBuffers[index];
 
+    }
+    cout<<endl;
+   delete[] MessageBuffers;
+    char*  messageBuffersd= new char[1024];
+     psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));
 
 }
 

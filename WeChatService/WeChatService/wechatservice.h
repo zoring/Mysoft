@@ -31,7 +31,7 @@ public:
     //组信息读取和转发
     void ReanGroundMessage(Tcp_Socket_ptr ReadSocket, error_code ec);
     void SendGroundMessage();
-    void HandleRead(char* MessageBuffer,const boost::system::error_code& e, size_t bytes);
+    void HandleRead(boost::shared_ptr<tcp::socket> psocket,char MessageBuffer[],const boost::system::error_code& e, size_t bytes);
 
    // 异步写操作完成后write_handler触发
      void write_handler(boost::shared_ptr<std::string> pstr, error_code ec, size_t bytes_transferred);
