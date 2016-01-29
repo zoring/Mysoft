@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     person.cpp \
     persongrounditem.cpp \
     persondata.cpp \
-    chatdialog.cpp
+    chatdialog.cpp \
+    wechatconnet.cpp \
+    wechatcontrol.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -30,10 +32,13 @@ HEADERS  += mainwindow.h \
     person.h \
     persongrounditem.h \
     persondata.h \
-    chatdialog.h
+    chatdialog.h \
+    wechatconnet.h \
+    wechatcontrol.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
     resigndialog.ui \
     frienddialog.ui \
     chatdialog.ui
+LIBS +=  -lboost_system -lboost_thread

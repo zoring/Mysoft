@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="WriteMsg">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -44,17 +44,14 @@ p, li { white-space: pre-wrap; }
     <string>Send</string>
    </property>
   </widget>
-  <widget class="QLabel" name="ChatLog">
+  <widget class="QTextEdit" name="ChatEditLog">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>311</width>
-     <height>381</height>
+     <width>291</width>
+     <height>411</height>
     </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
    </property>
   </widget>
  </widget>
