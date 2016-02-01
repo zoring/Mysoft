@@ -59,11 +59,11 @@ bool MainWindow::StaticList( QVBoxLayout* layout){
 
          GroundList->insertItem(i,v);
 
-    PersonGroundItem*  test = new PersonGroundItem(i,"fd","erf");
+  //  PersonGroundItem*  test = new PersonGroundItem(i,"fd","erf");
 
  //  GroundList->setItemWidget(v,test);
 
-test->show();
+//test->show();
 GroundList->show();
 
 //    QWidget *mw = new QWidget();

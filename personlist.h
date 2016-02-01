@@ -1,3 +1,5 @@
+class NetMsgToShow;
+
 #ifndef PERSONLIST_H
 #define PERSONLIST_H
 #include "persongrounditem.h"
@@ -12,7 +14,7 @@ class PersonList : public QListWidget
 {
 
 public:
-    explicit PersonList(QListWidget *parent = 0);
+    explicit PersonList(NetMsgToShow *NetToshow,QListWidget *parent = 0);
     bool StaticMainWindow();
     bool AddGround(std::string GroundName); //增加组
     //bool DelGround(PersonGroundItem Grounds);//删除组
@@ -23,6 +25,7 @@ private:
     bool StaticList( QVBoxLayout* layout);
     bool StaticGround(std::string keys);
     int  OnChageGround();
+    NetMsgToShow *NetToshow;
 signals:
 
 public slots:

@@ -10,7 +10,7 @@
 #include "QVBoxLayout"
 #include "QHBoxLayout"
 #include "persongrounditem.h"
-PersonList::PersonList(QListWidget *parent) : QListWidget(parent)
+PersonList::PersonList(NetMsgToShow *NetToshow,QListWidget *parent) : QListWidget(parent),NetToshow(NetToshow)
 {
 
     StaticMainWindow();
@@ -44,7 +44,7 @@ bool PersonList::StaticList( QVBoxLayout* layout){
 
      for (int i =0; i<=10;i++)
      {
-         PersonGroundItem*  test = new PersonGroundItem(i,"fd","erf");
+         PersonGroundItem*  test = new PersonGroundItem(NetToshow,i,"fd","erf");
           QListWidgetItem* v= new QListWidgetItem();
          v->setSizeHint(QSize(100,120));
 

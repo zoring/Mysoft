@@ -1,17 +1,25 @@
+class WeChatConnet;
+class NetMsgToShow;
 #ifndef WECHATCONTROL_H
 #define WECHATCONTROL_H
 
-#include <QObject>
-#include "chatdialog.h"
+
 #include "wechatconnet.h"
+#include "logindialog.h"
+#include <QObject>
+
+
 
 class WeChatControl
 {
 public:
     WeChatControl();
+    void SendMsgToNet(int Userid,string msg);
 
 private:
-    WeChatConnet NetWorkConnet;
+    WeChatConnet *NetWorkConnet;
+    NetMsgToShow  *toshow;
+
 
 };
 

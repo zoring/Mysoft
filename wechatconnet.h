@@ -14,7 +14,7 @@ class WeChatConnet
 public:
     WeChatConnet();
     bool IsConnet(ip::tcp::socket chatsocket, string address);
-    bool SendIndividualMsg(boost::shared_ptr<ip::tcp::socket> socket_ptr, const string& Msg);
+    bool SendIndividualMsg( const string& Msg);
     bool ReadIndividualMsg(boost::shared_ptr<ip::tcp::socket> socket_ptr);
     bool SendGroundMsg();
     bool ReadGroundMsg();

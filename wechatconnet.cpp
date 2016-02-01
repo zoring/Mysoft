@@ -20,9 +20,9 @@ bool WeChatConnet::IsConnet(ip::tcp::socket chatsocket, string address){
 }
 
 
-bool WeChatConnet::SendIndividualMsg( boost::shared_ptr<ip::tcp::socket> chatsocket,const string& Msg = "finsh"){
-    if (!chatsocket->is_open())
-        return false;
+bool WeChatConnet::SendIndividualMsg( const string& Msg = "finsh"){
+//    if (!chatsocket->is_open())
+//        return false;
    We_socket.async_write_some(buffer(Msg,Msg.size()), boost::bind(&WeChatConnet::SendHandle, this));
         return true;
 }

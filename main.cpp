@@ -14,7 +14,7 @@
 #include "QHBoxLayout"
 #include "persongrounditem.h"
 #include "personlist.h"
-
+#include "wechatcontrol.h"
 
 
 int main(int argc, char *argv[])
@@ -23,8 +23,7 @@ int main(int argc, char *argv[])
 
         QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());//设置编码
         LoginDialog dlg;
-        PersonList* ad = new PersonList();
-        ad->show();
+        WeChatControl* adf = new WeChatControl();
          return a.exec();
 
 //        if (dlg.exec() == QDialog::Accepted)

@@ -1,3 +1,4 @@
+class NetMsgToShow;
 //利用宏实现属性set和get
 #define GetSetNameOfProperty(type, name, access_permission)\
     access_permission: \
@@ -22,7 +23,7 @@ class PersonGroundItem: public QWidget
 {
 
 public:
-      PersonGroundItem(int UserId, char* UesrName, char* SiginWord, char* IamgeUrl="",QWidget *parent=0);
+      PersonGroundItem(NetMsgToShow* NetToShow,int UserId, char* UesrName, char* SiginWord, char* IamgeUrl="",QWidget *parent=0);
 
 public:
     void AddPerson(Person const Personid);
@@ -41,7 +42,7 @@ private:
     QLabel *SiginWord;  //个性签名
     QWidget *PersonImage;//用户头像
     string ImageUrl;
-
+    NetMsgToShow *NetToShow;
 GetSetNameOfProperty (std::string, IPAddress, private)
 GetSetNameOfProperty (std::string, GroundName, private)
 GetSetNameOfProperty (std::string, ImageUrl, private)

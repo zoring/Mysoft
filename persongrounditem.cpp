@@ -11,9 +11,10 @@
 #include "QMouseEvent"
 #include "QDebug"
 #include "QHBoxLayout"
+#include "netmsgtoshow.h"
 #include "chatdialog.h"
 using namespace std;
-PersonGroundItem::PersonGroundItem(int UserId, char* UesrName, char* SignWord, char* ImageUrl,QWidget *parent):QWidget(parent)
+PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, char* UesrName, char* SignWord, char* ImageUrl,QWidget *parent):QWidget(parent), NetToShow(NetToShow)
 {
 
     this->UserId = UserId;
@@ -44,8 +45,8 @@ PersonGroundItem::PersonGroundItem(int UserId, char* UesrName, char* SignWord, c
 void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
     if(event->button() == Qt::LeftButton) {
 
-                ChatDialog* test =  new ChatDialog();
-            test->show();
+        ChatDialog* test =  new ChatDialog(NetToShow);
+         test->show();
     }
 }
 

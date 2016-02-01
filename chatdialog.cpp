@@ -2,9 +2,13 @@
 #include "ui_chatdialog.h"
 #include <string>
 #include <qstring.h>
-ChatDialog::ChatDialog(QWidget *parent) :
+#include "netmsgtoshow.h"
+#include <boost/bind.hpp>
+#include <iostream>
+ChatDialog::ChatDialog(NetMsgToShow* sendObj, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::ChatDialog)
+    ui(new Ui::ChatDialog),
+    SendToNetObj(sendObj)
 {
 
     ui->setupUi(this);
@@ -21,6 +25,9 @@ ChatDialog::~ChatDialog()
 void ChatDialog::SendMessage(){
     QString sendMsg = ui->WriteMsg->toPlainText();
     string Msg = sendMsg.toStdString();
+  SendToNetObj->SendMsg(123,Msg);
+    //boost::bind(&NetMsgToShow::SendMsg,SendToNetObj, 123,Msg);
+    std::cout<<Msg<<std::endl;
     ui->WriteMsg->setPlainText("");
 }
 
