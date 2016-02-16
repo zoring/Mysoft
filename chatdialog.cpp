@@ -27,7 +27,6 @@ void ChatDialog::SendMessage(){
     string Msg = sendMsg.toStdString();
   SendToNetObj->SendMsg(123,Msg);
     //boost::bind(&NetMsgToShow::SendMsg,SendToNetObj, 123,Msg);
-    std::cout<<Msg<<std::endl;
     ui->WriteMsg->setPlainText("");
 }
 

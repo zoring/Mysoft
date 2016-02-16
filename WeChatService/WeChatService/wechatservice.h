@@ -7,6 +7,9 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/smart_ptr.hpp>
+#include "dbcontrol.h"
+#include "logincontrol.h"
+
 using namespace boost::asio;
 using boost::system::error_code;
 using namespace std;
@@ -31,7 +34,7 @@ public:
     //组信息读取和转发
     void ReanGroundMessage(Tcp_Socket_ptr ReadSocket, error_code ec);
     void SendGroundMessage();
-    void HandleRead(boost::shared_ptr<tcp::socket> psocket,char MessageBuffer[],const boost::system::error_code& e, size_t bytes);
+    void HandleRead(boost::shared_ptr<tcp::socket> psocket, char MessageBuffer[],const boost::system::error_code& e, size_t bytes);
 
    // 异步写操作完成后write_handler触发
      void write_handler(boost::shared_ptr<std::string> pstr, error_code ec, size_t bytes_transferred);
@@ -59,6 +62,9 @@ private:
      //相关辅助记录
      map<string, Tcp_Socket_ptr> AlwaysUserMap;
      ip::tcp::acceptor tcp_acceptor;
+     DBControl* dbControl;
+     LoginControl* loginControl;
+
 
 
 

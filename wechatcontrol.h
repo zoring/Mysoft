@@ -2,8 +2,6 @@ class WeChatConnet;
 class NetMsgToShow;
 #ifndef WECHATCONTROL_H
 #define WECHATCONTROL_H
-
-
 #include "wechatconnet.h"
 #include "logindialog.h"
 #include <QObject>
@@ -19,7 +17,8 @@ public:
 private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;
-
+    LoginDialog* dlg;
+    bool IsConnet();
 
 };
 

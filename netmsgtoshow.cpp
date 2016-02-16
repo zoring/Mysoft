@@ -16,5 +16,5 @@ void NetMsgToShow::ReviceMsg(int PersonId,string msg){
 bool NetMsgToShow::SendMsg(const int ReviceId, const string msg){
     WeCtrol->SendMsgToNet(123,msg);
 //     boost::bind(&WeChatControl::SendMsgToNet,WeCtrol,123,msg );
-      std::cout<<msg<<std::endl;
+
 }

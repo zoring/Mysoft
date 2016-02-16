@@ -4,7 +4,8 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
                              ReadInMegPoint(tcp::v4(), 1200), ReadGroundMegPoint(ip::udp::v4(), 1200), FuntionPoint(ip::udp::v4(), 1201),
                              tcp_acceptor(msg_iosev,ReadInMegPoint)
 {
-
+ dbControl = new DBControl();
+ loginControl = new LoginControl();
 }
 
 void WeChatService::StaticConnetion(){
@@ -36,8 +37,8 @@ void WeChatService::ClientTcpConnet(){
 void WeChatService::ReadIndividualMessage(Tcp_Socket_ptr ReadSocket, boost::system::error_code ec){
     ClientTcpConnet();
     if(ec) return;
+
     char*  messageBuffers= new char[1024];
-    cout<<"fdsf"<<endl;
     ReadSocket->async_read_some(buffer(messageBuffers,1024),boost::bind(&WeChatService::HandleRead,this,ReadSocket,messageBuffers,_1,_2));
 
 }
@@ -48,14 +49,20 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
     if (bytes == 0)
         return;
     //读数据处理
+
     for (size_t index=0; index < bytes;++index)
     {cout<<MessageBuffers[index];
 
     }
-    cout<<endl;
-   delete[] MessageBuffers;
+   cout<<"this is ok"<<endl;
+   boost::shared_array<char> msg(MessageBuffers);
+   
     char*  messageBuffersd= new char[1024];
      psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));
 
 }
 
+
+void WeChatService::SendIndividualMessage(){
+    
+}
