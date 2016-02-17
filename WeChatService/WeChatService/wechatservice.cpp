@@ -10,32 +10,34 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
 
 void WeChatService::StaticConnetion(){
 
-    boost::thread(boost::bind(&WeChatService::StartMsgService,this)).join();
+    boost::thread(boost::bind(&WeChatService::StartMsgService,this));
    // boost::thread(boost::bind(&WeChatService::StartMsgService,this)).join();
 }
 
 //多线程ｒｕｎ
 void WeChatService::StartMsgService(){
+
     ClientTcpConnet();
     for (int i=0;i<6;i++)
     {   boost::shared_ptr<boost::thread> pt(new boost::thread(
                                             boost::bind(&boost::asio::io_service::run, &message_iosev))
                                             );
         TcpServiceList.push_back(pt);
+
     }
+
 }
 
 
 
 void WeChatService::ClientTcpConnet(){
-
+    cout<<"fdsf"<<endl;
     WeChatService::Tcp_Socket_ptr Tcp_Socket(new tcp::socket(message_iosev));
     tcp_acceptor.async_accept(*Tcp_Socket, boost::bind(&WeChatService::ReadIndividualMessage, this,Tcp_Socket, _1));
 }
 
 //有信息到来时候
 void WeChatService::ReadIndividualMessage(Tcp_Socket_ptr ReadSocket, boost::system::error_code ec){
-    ClientTcpConnet();
     if(ec) return;
 
     char*  messageBuffers= new char[1024];

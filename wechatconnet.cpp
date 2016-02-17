@@ -25,7 +25,7 @@ void WeChatConnet::ReadHandle(){
 
       char*  messageBuffersd= new char[1024];
 
-    We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));
+      We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));
       We_io_service.run();
 }
 
