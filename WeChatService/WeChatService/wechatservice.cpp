@@ -56,13 +56,22 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
     }
    cout<<"this is ok"<<endl;
    boost::shared_array<char> msg(MessageBuffers);
-   
+   SendIndividualMessage(psocket,"fdsf");
     char*  messageBuffersd= new char[1024];
      psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));
 
 }
 
 
-void WeChatService::SendIndividualMessage(){
+void WeChatService::SendIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket,string msg=""){
+     ReadSocket->async_write_some(buffer(msg,msg.size()),boost::bind(&WeChatService::SendHandle,this,_1));
     
+}
+
+void WeChatService::SendHandle(const boost::system::error_code &ec){
+    if (ec)
+    {
+        std::cout << boost::system::system_error(ec).what() << std::endl;
+    }
+    cout<<"finsh"<<endl;
 }

@@ -13,12 +13,14 @@ class WeChatControl
 public:
     WeChatControl();
     void SendMsgToNet(int Userid,string msg);
-
+     bool IsConnet();
+    bool CheckUser(const string userID, const string Password);
 private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;
     LoginDialog* dlg;
-    bool IsConnet();
+
+
 
 };
 

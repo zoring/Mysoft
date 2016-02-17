@@ -15,11 +15,12 @@ public:
     WeChatConnet();
     bool IsConnet(ip::tcp::socket chatsocket, string address);
     bool SendIndividualMsg( const string& Msg);
-    bool ReadIndividualMsg(boost::shared_ptr<ip::tcp::socket> socket_ptr);
+    bool ReadIndividualMsg(char MessageBuffers[],const boost::system::error_code &e, size_t bytes);
     bool SendGroundMsg();
     bool ReadGroundMsg();
-    void ReadHandle(boost::shared_ptr<ip::tcp::socket> socket_ptr, const boost::system::error_code &err, std::size_t bytes);
+    void ReadHandle();
     void SendHandle();
+
 private :
 
     io_service We_io_service;

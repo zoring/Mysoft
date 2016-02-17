@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
         QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());//设置编码
-        LoginDialog dlg;
         WeChatControl* adf = new WeChatControl();
          return a.exec();
 

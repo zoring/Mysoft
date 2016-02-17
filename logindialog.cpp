@@ -1,9 +1,11 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 #include "QMessageBox"
-LoginDialog::LoginDialog(QWidget *parent) :
+#include "wechatcontrol.h"
+LoginDialog::LoginDialog(WeChatControl* control,QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::LoginDialog)
+    ui(new Ui::LoginDialog) ,
+   control(control)
 {
     ui->setupUi(this);
 }
@@ -20,8 +22,11 @@ void LoginDialog::on_QuitButton_clicked()
 
 void LoginDialog::on_LoginButton_clicked()
 {
-    if (ui->UserNameEdit->text() == tr("123") && ui->PassWordEdit->text() == tr("123")){
+    if (CheckUserAndPassword()){
+        IsLogin = true;
+         control->IsConnet();
         accept();
+       //
     }
     else
     {
@@ -32,4 +37,18 @@ void LoginDialog::on_LoginButton_clicked()
        ui->PassWordEdit->clear();
        ui->UserNameEdit->setFocus();
     }
+}
+
+
+bool LoginDialog::CheckUserAndPassword(){
+
+    control->CheckUser( ui->UserNameEdit->text().toStdString(), ui->PassWordEdit->text().toStdString());
+
+    return true;
+
+
+}
+
+bool LoginDialog::GetIsLogin(){
+    return IsLogin;
 }
