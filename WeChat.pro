@@ -44,3 +44,6 @@ FORMS    += mainwindow.ui \
     frienddialog.ui \
     chatdialog.ui
 LIBS +=  -lboost_system -lboost_thread
+
+DISTFILES += \
+    数据层

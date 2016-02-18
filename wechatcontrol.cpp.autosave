@@ -37,7 +37,6 @@ bool WeChatControl::IsConnet(){
 
 bool WeChatControl::CheckUser( string userID,  string Password){
     userID = userID + ":" +Password ;
-    cout<<userID<<endl;
     SendMsgToNet(20,userID);
     return true;
 }

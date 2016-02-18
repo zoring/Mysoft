@@ -56,7 +56,8 @@ SOURCES       = ../WeChatService/main.cpp \
 		../WeChatService/connetdb.cpp \
 		../WeChatService/dbcontrol.cpp \
 		../WeChatService/logindb.cpp \
-		../WeChatService/logincontrol.cpp 
+		../WeChatService/logincontrol.cpp \
+		../WeChatService/generfuntions.cpp 
 OBJECTS       = main.o \
 		wechatservice.o \
 		userservice.o \
@@ -65,7 +66,8 @@ OBJECTS       = main.o \
 		connetdb.o \
 		dbcontrol.o \
 		logindb.o \
-		logincontrol.o
+		logincontrol.o \
+		generfuntions.o
 DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -202,7 +204,8 @@ DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		connetdb.h \
 		dbcontrol.h \
 		logindb.h \
-		logincontrol.h ../WeChatService/main.cpp \
+		logincontrol.h \
+		generfuntions.h ../WeChatService/main.cpp \
 		../WeChatService/wechatservice.cpp \
 		../WeChatService/userservice.cpp \
 		../WeChatService/userdb.cpp \
@@ -210,7 +213,8 @@ DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../WeChatService/connetdb.cpp \
 		../WeChatService/dbcontrol.cpp \
 		../WeChatService/logindb.cpp \
-		../WeChatService/logincontrol.cpp
+		../WeChatService/logincontrol.cpp \
+		../WeChatService/generfuntions.cpp
 QMAKE_TARGET  = WeChatService
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = WeChatService
@@ -583,6 +587,9 @@ logincontrol.o: ../WeChatService/logincontrol.cpp ../WeChatService/logincontrol.
 		../WeChatService/logindb.h \
 		../WeChatService/basedb.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o logincontrol.o ../WeChatService/logincontrol.cpp
+
+generfuntions.o: ../WeChatService/generfuntions.cpp ../WeChatService/generfuntions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o generfuntions.o ../WeChatService/generfuntions.cpp
 
 ####### Install
 

@@ -5,7 +5,7 @@ class LoginDB :BaseDB
 {
 public:
     LoginDB(MYSQL* coon);
-    bool IsLogin(string name,string value,string password,string PasswordValue);
+    bool IsLogin(string idValue,string PasswordValue);
 };
 
 #endif // LOGINDB_H

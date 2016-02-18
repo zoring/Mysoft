@@ -7,6 +7,10 @@ LoginControl::LoginControl()
     Login = new LoginDB(conn->GetMysqlPtr());
 }
 
-bool LoginControl::IsLogin(string name,string value,string password,string PasswordValue){
-    return Login->IsLogin(name,value,password,PasswordValue);
+bool LoginControl::IsLogin(int id, string Password){
+    std::stringstream ss;
+    std::string str;
+    ss<<id;
+    ss>>str;
+    return Login->IsLogin(str, Password);
 }

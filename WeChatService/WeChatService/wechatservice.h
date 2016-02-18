@@ -7,9 +7,10 @@
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <boost/smart_ptr.hpp>
+#include <string>
 #include "dbcontrol.h"
 #include "logincontrol.h"
-
+#include <boost/function.hpp>
 using namespace boost::asio;
 using boost::system::error_code;
 using namespace std;
@@ -47,6 +48,17 @@ public:
 
 
 private:
+         void CheackLogin(int UserId = 0, int TargetId= 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
+         void SerchMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void SendIndiviMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void SendGroundMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0) ;
+         void UpdateMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void DeletcMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AddFriends(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AddGround(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AllowAddFriends(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AllowAddGround(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+
      //信息的ｓｅｒｖｉｃｅ和　功能的ｓｅｒｖｉｃｅ
      io_service &message_iosev ;
      io_service &Funtion_iosev;
@@ -61,10 +73,12 @@ private:
      vector< boost::shared_ptr<boost::thread> > TcpServiceList;
      vector< boost::shared_ptr<tcp::socket> > SocketPtrs;
      //相关辅助记录
-     map<string, Tcp_Socket_ptr> AlwaysUserMap;
+     map<int, Tcp_Socket_ptr> AlwaysUserMap;
      ip::tcp::acceptor tcp_acceptor;
      DBControl* dbControl;
      LoginControl* loginControl;
+     int  AllCmd;
+     vector< boost::function<void (int , int ,string, boost::shared_ptr<tcp::socket>)> > WeChatfuntions;
 
 };
 

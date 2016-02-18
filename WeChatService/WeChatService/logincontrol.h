@@ -6,7 +6,7 @@ class LoginControl
 {
 public:
     LoginControl();
-    bool IsLogin(string name,string value,string password,string PasswordValue);
+    bool IsLogin(int id, string Password);
 private:
      ConnetDB* conn;
      LoginDB* Login;

@@ -21,7 +21,7 @@ bool WeChatConnet::IsConnet(ip::tcp::socket chatsocket, string address){
 
 }
 void WeChatConnet::ReadHandle(){
-     cout<<"is ok?"<<endl;
+
 
       char*  messageBuffersd= new char[1024];
 
