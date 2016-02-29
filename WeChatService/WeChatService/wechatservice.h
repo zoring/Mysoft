@@ -48,6 +48,7 @@ public:
 
 
 private:
+        void SightUp(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
          void CheackLogin(int UserId = 0, int TargetId= 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
          void SerchMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
          void SendIndiviMsg(int UserId = 0, int TargetId = 0,string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);

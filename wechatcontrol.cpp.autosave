@@ -13,7 +13,7 @@ WeChatControl::WeChatControl()
 }
 
 
-void WeChatControl::SendMsgToNet( int comment = 123, string msg=""){
+void WeChatControl::SendMsgToNet( int comment = 0, string msg=""){
     std::stringstream ss;
     std::string str;
     ss<<comment;
@@ -35,8 +35,13 @@ bool WeChatControl::IsConnet(){
 }
 
 
-bool WeChatControl::CheckUser( string userID,  string Password){
-    userID = userID + ":" +Password ;
-    SendMsgToNet(20,userID);
+bool WeChatControl::CheckUser( string userName,  string Password){
+    userName = userName + ":" +Password ;
+    SendMsgToNet(0,userName);
     return true;
+}
+
+
+bool WeChatControl::ResightUser(const string Msg){
+     SendMsgToNet(0,Msg);
 }

@@ -97,7 +97,7 @@
     <string>登陆</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="LogOn">
+  <widget class="QPushButton" name="SightUp">
    <property name="geometry">
     <rect>
      <x>90</x>

@@ -14,3 +14,8 @@ bool LoginControl::IsLogin(int id, string Password){
     ss>>str;
     return Login->IsLogin(str, Password);
 }
+
+
+bool LoginControl::SightUp(string UserName, string Password){
+    return Login->SightUP(UserName, Password) ;
+}

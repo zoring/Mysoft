@@ -1,6 +1,7 @@
 #include "logindialog.h"
 #include "ui_logindialog.h"
 #include "QMessageBox"
+
 #include "wechatcontrol.h"
 LoginDialog::LoginDialog(WeChatControl* control,QWidget *parent) :
     QDialog(parent),
@@ -8,6 +9,10 @@ LoginDialog::LoginDialog(WeChatControl* control,QWidget *parent) :
    control(control)
 {
     ui->setupUi(this);
+     SightUpDialog = new ResignDialog(this);
+   this->connect(ui->SightUp,&QPushButton::clicked,this,&LoginDialog::on_SightButton_clicked);
+
+    this->connect(SightUpDialog->GetButton(),&QPushButton::clicked,this,&LoginDialog::on_GetSightUpMsg);
 }
 
 LoginDialog::~LoginDialog()
@@ -17,7 +22,17 @@ LoginDialog::~LoginDialog()
 
 void LoginDialog::on_QuitButton_clicked()
 {
+}
 
+void LoginDialog::on_SightButton_clicked()
+{
+
+       SightUpDialog->show();
+
+}
+
+void LoginDialog::on_GetSightUpMsg(){
+   control->ResightUser(SightUpDialog->GetEditeMsg());
 }
 
 void LoginDialog::on_LoginButton_clicked()
