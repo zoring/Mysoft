@@ -17,6 +17,7 @@ bool LoginDB::IsLogin(string idValue,string PasswordValue){
 
 
 bool LoginDB::CanSigUP(string username){
+    cout<< "is here?" ;
      string Msg = " select * from user where username = '" + username + " '" ;
      if (mysql_query(Coon.get(), Msg.data()))
          {
@@ -28,8 +29,10 @@ bool LoginDB::CanSigUP(string username){
 }
 
 bool LoginDB::SightUP(string Username, string PasswirdValue){
+    cout<<"Hello ?";
     if (!CanSigUP(Username))
         return false ;
+    cout <<Username<< " "<< PasswirdValue<<endl;
     string Msg = "insert user values ("", "+ Username +" , "+ PasswirdValue + " ) ";
     if (mysql_query(Coon.get(), Msg.data()))
         return false;

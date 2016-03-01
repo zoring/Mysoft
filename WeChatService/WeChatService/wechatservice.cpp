@@ -8,9 +8,9 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
 {
  dbControl = new DBControl();
  loginControl = new LoginControl();
-        WeChatfuntions.push_back( boost::bind(&WeChatService::SightUp ,this,_1,_2,_3,_4));
+        WeChatfuntions.push_back( boost::bind(&WeChatService::SightUp ,this,_1,_2,_3,_4,_5));
 
-           WeChatfuntions.push_back( boost::bind(&WeChatService::CheackLogin ,this,_1,_2,_3,_4));
+           WeChatfuntions.push_back( boost::bind(&WeChatService::CheackLogin ,this,_1,_2,_3,_4,_5));
 //          WeChatfuntions.push_back(boost::bind(&WeChatService::SerchMsg ,this,_1,_2,_3,_4));
 //          WeChatfuntions.push_back(boost::bind(&WeChatService::SendIndiviMsg ,this,_1,_2,_3,_4));
 //          WeChatfuntions.push_back (boost::bind(&WeChatService::SendGroundMsg ,this,_1,_2,_3,_4) ) ;
@@ -26,32 +26,21 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
 }
 
 
-void WeChatService::SightUp(int UserId, int TargetId, string Msg, boost::shared_ptr<tcp::socket> psocket){
-    int UserNameLength = 0;
-    int PasswordLength = 0;
-    cout<<"Is OK?"<<endl;
-    cout<<Msg<<endl;
-    for (int i=0; i<Msg.size();i++){
-        if (Msg.substr(i,i+1)==":")
-            if (!UserNameLength)
-                UserNameLength = i ;
-            else
-                PasswordLength = i;
-    }
-    if ( UserNameLength > Msg.size() || PasswordLength > Msg.size())
-        return ;
-    string UserName = Msg.substr(0,UserNameLength);
-    string PassWord = Msg.substr(UserNameLength +1,PasswordLength);
-    loginControl->SightUp(UserName,PassWord) ;
+void WeChatService::SightUp(int UserId, int TargetId,string UserName, string Msg, boost::shared_ptr<tcp::socket> psocket){
+   cout<<"is that ?";
+   if( loginControl->SightUp(UserName,Msg))
+       cout<<"Ok, insert data";
+   else
+       cout<<"false ";
 }
 
-void WeChatService::CheackLogin(int UserId, int TargetId, string Msg, boost::shared_ptr<tcp::socket> psocket){
+void WeChatService::CheackLogin(int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
     cout<<Msg<<endl;
 //    if(loginControl->IsLogin(UserId,Msg))
 //        AlwaysUserMap[UserId] = psocket;
 }
 
-void WeChatService::SerchMsg(int UserId, int TargetId, string Msg, boost::shared_ptr<tcp::socket> psocket){
+void WeChatService::SerchMsg(int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
 
 }
 
@@ -112,9 +101,9 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
        return ;
 
  string msg =Msg.GetBody();
-  Msg.ShowTheMsg();
- cout<<Msg.GetCmmd()<<" user "<<Msg.GetUserId()<<" Target "<<Msg.GetTargetId()<<" Name "<<Msg.GetName()<<" Pass "<<Msg.GetBody()<<endl;
-  WeChatfuntions[cmmd](userId,ToOtherId,msg,psocket) ;
+
+  string Name = Msg.GetName();
+  WeChatfuntions[cmmd](userId,ToOtherId,Name,msg,psocket) ;
    char*  messageBuffersd= new char[1024];
    psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));
 
