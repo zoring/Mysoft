@@ -32,7 +32,7 @@ void LoginDialog::on_SightButton_clicked()
 }
 
 void LoginDialog::on_GetSightUpMsg(){
-   control->ResightUser(SightUpDialog->GetEditeMsg());
+   control->ResightUser(SightUpDialog->GetUserNameEdit(), SightUpDialog->GetUserPasswordEdit());
 }
 
 void LoginDialog::on_LoginButton_clicked()

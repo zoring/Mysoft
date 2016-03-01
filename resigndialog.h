@@ -16,7 +16,8 @@ public:
     ~ResignDialog();
 
     QPushButton* GetButton();
-    string GetEditeMsg();
+    string GetUserNameEdit();
+    string GetUserPasswordEdit();
 private:
     Ui::ResignDialog *ui;
 

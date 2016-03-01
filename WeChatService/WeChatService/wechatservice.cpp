@@ -1,10 +1,10 @@
 #include "wechatservice.h"
-#include "generfuntions.h"
+#include "chatbuffer.h"
 #include <boost/thread.hpp>
 WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):message_iosev(msg_iosev), Funtion_iosev(fun_iosev),
                              ReadInMegPoint(tcp::v4(), 1200), ReadGroundMegPoint(ip::udp::v4(), 1200), FuntionPoint(ip::udp::v4(), 1201),
                              tcp_acceptor(msg_iosev,ReadInMegPoint),
-                             AllCmd(10)
+                             AllCmd(90)
 {
  dbControl = new DBControl();
  loginControl = new LoginControl();
@@ -97,20 +97,24 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
     if (bytes == 0)
         return;
     //读数据处理
-   boost::shared_array<char> msg(MessageBuffers);
-   string Msg = string(MessageBuffers);
-   int cmmd = atoi(Msg.substr(0,1).c_str()) ;
-   int userId = atoi(Msg.substr(2,5).c_str()) ;
-   int ToOtherId =  atoi(Msg.substr(6,11).c_str());
-   if (Msg.length() > 13)
-    Msg = Msg.substr(12,Msg.length());
-   else
-       Msg = "";
+ cout<<bytes<<endl;
+   ChatBuffer Msg;
+   Msg.SetChatBuffer(MessageBuffers,bytes);
+   Msg.ShowTheMsg();
+   delete MessageBuffers ;
+
+
+   int cmmd = Msg.GetCmmd();
+   int userId = Msg.GetUserId();
+   int ToOtherId =  Msg.GetTargetId();
 
    if (cmmd >= AllCmd or cmmd < 0)
        return ;
 
-  WeChatfuntions[cmmd](userId,ToOtherId,Msg,psocket) ;
+ string msg =Msg.GetBody();
+  Msg.ShowTheMsg();
+ cout<<Msg.GetCmmd()<<" user "<<Msg.GetUserId()<<" Target "<<Msg.GetTargetId()<<" Name "<<Msg.GetName()<<" Pass "<<Msg.GetBody()<<endl;
+  WeChatfuntions[cmmd](userId,ToOtherId,msg,psocket) ;
    char*  messageBuffersd= new char[1024];
    psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));
 

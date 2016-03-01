@@ -12,7 +12,7 @@ SOURCES += main.cpp \
     dbcontrol.cpp \
     logindb.cpp \
     logincontrol.cpp \
-    generfuntions.cpp
+    chatbuffer.cpp
 
 HEADERS += \
     wechatservice.h \
@@ -23,6 +23,6 @@ HEADERS += \
     dbcontrol.h \
     logindb.h \
     logincontrol.h \
-    generfuntions.h
+    chatbuffer.h
 
 LIBS +=  -lboost_system -lboost_thread -lmysqlclient -lboost_signals

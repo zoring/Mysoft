@@ -33,7 +33,10 @@ bool WeChatConnet::SendIndividualMsg( const string& Msg = "finsh"){
 //    if (!chatsocket->is_open())
 //        return false;
 
-   We_socket.async_write_some(buffer(Msg,Msg.size()), boost::bind(&WeChatConnet::SendHandle, this));
+   char* msg =new char[1024] ;
+   std::copy(Msg.begin(),Msg.end(),msg);
+
+   We_socket.async_write_some(buffer(msg,Msg.size()), boost::bind(&WeChatConnet::SendHandle, this,msg));
         return true;
 }
 
@@ -57,6 +60,7 @@ bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system:
 }
 
 
-void WeChatConnet::SendHandle(){
+void WeChatConnet::SendHandle(char* buffer){
+    delete buffer;
     cout<<"Finsh"<<endl;
 }

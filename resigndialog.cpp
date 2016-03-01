@@ -20,19 +20,18 @@ QPushButton* ResignDialog::GetButton(){
     return ui->resigin;
 }
 
-string ResignDialog::GetEditeMsg(){
+string ResignDialog::GetUserNameEdit(){
     int UserNameSize = ui->UserNameEdit->text().size() ;
-    int PasswordSize = ui->PassWordEdit->text().size() ;
-    if ( UserNameSize >= 10 || PasswordSize >= 15 || UserNameSize ==0 || PasswordSize == 0)
+
+    if ( UserNameSize >= 10 ||  UserNameSize ==0  )
         return "";
-    string userName = ui->UserNameEdit->text().toStdString();
-    string password = ui->PassWordEdit->text().toStdString();
-    std::stringstream ss,s2;
-    std::string str1,str2;
-    ss<<UserNameSize;
-    ss>>str1;
-    s2<<PasswordSize;
-    s2>>str2;
-    string msg = "" + str1 +":"+ userName + str2 + ":" + password;
-    return msg;
+   return ui->UserNameEdit->text().toStdString();
+
+}
+
+string ResignDialog::GetUserPasswordEdit(){
+    int PasswordSize = ui->PassWordEdit->text().size() ;
+    if (PasswordSize >= 15 || PasswordSize == 0 )
+        return "" ;
+    return ui->PassWordEdit->text().toStdString();
 }

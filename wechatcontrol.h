@@ -12,10 +12,10 @@ class WeChatControl
 {
 public:
     WeChatControl();
-    void SendMsgToNet(int Userid,string msg);
+    void SendMsgToNet(int cmmd,int Userid,int Targetid,string username,string msg);
      bool IsConnet();
     bool CheckUser(const string userID, const string Password);
-    bool ResightUser(const string Msg);
+    bool ResightUser(const string userName, const string Password);
 private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;

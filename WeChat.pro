@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     chatdialog.cpp \
     wechatconnet.cpp \
     wechatcontrol.cpp \
-    netmsgtoshow.cpp
+    netmsgtoshow.cpp \
+    chatbuffer.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -36,7 +37,8 @@ HEADERS  += mainwindow.h \
     chatdialog.h \
     wechatconnet.h \
     wechatcontrol.h \
-    netmsgtoshow.h
+    netmsgtoshow.h \
+    chatbuffer.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \

@@ -19,7 +19,7 @@ public:
     bool SendGroundMsg();
     bool ReadGroundMsg();
     void ReadHandle();
-    void SendHandle();
+    void SendHandle(char* buffer);
 
 private :
 
