@@ -7,12 +7,12 @@
 #include <boost/smart_ptr.hpp>
 using namespace std;
 using namespace boost::asio;
-
+class WeChatControl;
 class WeChatConnet
 {
 
 public:
-    WeChatConnet();
+    WeChatConnet(WeChatControl* Control);
     bool IsConnet(ip::tcp::socket chatsocket, string address);
     bool SendIndividualMsg( const string& Msg);
     bool ReadIndividualMsg(char MessageBuffers[],const boost::system::error_code &e, size_t bytes);
@@ -22,7 +22,7 @@ public:
     void SendHandle(char* buffer);
 
 private :
-
+    WeChatControl* Control;
     io_service We_io_service;
     ip::tcp::endpoint We_endpoint;
     ip::tcp::socket We_socket;

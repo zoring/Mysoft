@@ -13,7 +13,7 @@ public:
     NetMsgToShow(WeChatControl *WeCtrol);
     void ReviceMsg(int PersonId,string msg);
     bool SendMsg(int ReviceId, string mag);
-
+    void LoginShow();
 private :
     WeChatControl   *WeCtrol;
     PersonList* ad;

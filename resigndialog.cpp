@@ -35,3 +35,19 @@ string ResignDialog::GetUserPasswordEdit(){
         return "" ;
     return ui->PassWordEdit->text().toStdString();
 }
+
+void ResignDialog::ResetMeg(){
+   ui->UserNameEdit->clear();
+   ui->PassWordEdit->clear();
+   ui->UserNameEdit->setFocus();
+}
+
+void ResignDialog::GetResightResult(bool Result){
+    if ( Result )
+    {
+        this->close() ;
+
+    }
+    else
+       ResetMeg();
+}

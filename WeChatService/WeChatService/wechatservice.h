@@ -31,7 +31,7 @@ public:
 
     //私人聊天信息读取和转发
     void ReadIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket, boost::system::error_code ec);
-    void SendIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket,string msg);
+    void SendIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket,int cmmd,int Userid,int Targetid,string username,string msg);
     //组信息读取和转发
     void ReanGroundMessage(Tcp_Socket_ptr ReadSocket, error_code ec);
     void SendGroundMessage();
@@ -48,17 +48,17 @@ public:
 
 
 private:
-        void SightUp(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void CheackLogin(int UserId = 0, int TargetId= 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
-         void SerchMsg(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void SendIndiviMsg(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void SendGroundMsg(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0) ;
-         void UpdateMsg(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void DeletcMsg(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void AddFriends(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void AddGround(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void AllowAddFriends(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void AllowAddGround(int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+        void SightUp(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void CheackLogin(int cmmd,int UserId = 0, int TargetId= 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
+         void SerchMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void SendIndiviMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void SendGroundMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0) ;
+         void UpdateMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void DeletcMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AddFriends(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AddGround(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AllowAddFriends(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+         void AllowAddGround(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
 
      //信息的ｓｅｒｖｉｃｅ和　功能的ｓｅｒｖｉｃｅ
      io_service &message_iosev ;
@@ -79,7 +79,7 @@ private:
      DBControl* dbControl;
      LoginControl* loginControl;
      int  AllCmd;
-     vector< boost::function<void (int , int , string, string, boost::shared_ptr<tcp::socket>)> > WeChatfuntions;
+     vector< boost::function<void (int ,int , int , string, string, boost::shared_ptr<tcp::socket>)> > WeChatfuntions;
 
 };
 

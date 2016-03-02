@@ -18,8 +18,11 @@ public:
     QPushButton* GetButton();
     string GetUserNameEdit();
     string GetUserPasswordEdit();
+    void GetResightResult(bool Result);
+
 private:
     Ui::ResignDialog *ui;
+      void ResetMeg();
 
 };
 

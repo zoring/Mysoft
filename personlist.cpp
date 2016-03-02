@@ -13,9 +13,9 @@
 PersonList::PersonList(NetMsgToShow *NetToshow,QListWidget *parent) : QListWidget(parent),NetToshow(NetToshow)
 {
 
-    StaticMainWindow();
 
 
+StaticMainWindow();
 }
 
 //初始化聊天界面

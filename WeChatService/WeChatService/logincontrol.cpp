@@ -17,6 +17,6 @@ bool LoginControl::IsLogin(int id, string Password){
 
 
 bool LoginControl::SightUp(string UserName, string Password){
-    cout<<"what ?S";
+
     return Login->SightUP(UserName, Password) ;
 }

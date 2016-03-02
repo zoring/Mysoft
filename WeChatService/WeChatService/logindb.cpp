@@ -5,35 +5,49 @@ LoginDB::LoginDB(MYSQL* coon):BaseDB(coon)
 
 }
 bool LoginDB::IsLogin(string idValue,string PasswordValue){
-    string Msg = " select * from user where id = '" + idValue + " and password  = ' " + PasswordValue + " '" ;
+    string Msg = " select * from user where id = '" + idValue + "' and password  = '" + PasswordValue + "'" ;
+     MYSQL_RES *res;
+      MYSQL_ROW row;
     if (mysql_query(Coon.get(), Msg.data()))
         {
 
-            return true;
+            return false;
         }
-
+    res = mysql_use_result(Coon.get());
+    if ((row = mysql_fetch_row(res)) == NULL)
+    {    mysql_free_result(res);
         return false;
+    }
+    mysql_free_result(res);
+    return true;
 }
 
 
 bool LoginDB::CanSigUP(string username){
-    cout<< "is here?" ;
-     string Msg = " select * from user where username = '" + username + " '" ;
+     string Msg = " select * from user where name = '" + username + "'" ;
+     cout<<Msg<<endl;
      if (mysql_query(Coon.get(), Msg.data()))
          {
 
              return false;
          }
+     MYSQL_RES *res;
+     MYSQL_ROW row;
+      res = mysql_use_result(Coon.get());
+      if ((row = mysql_fetch_row(res)) != NULL)
+      {    mysql_free_result(res);
+          return false;
+      }
 
+      mysql_free_result(res);
          return true;
 }
 
 bool LoginDB::SightUP(string Username, string PasswirdValue){
-    cout<<"Hello ?";
     if (!CanSigUP(Username))
         return false ;
-    cout <<Username<< " "<< PasswirdValue<<endl;
-    string Msg = "insert user values ("", "+ Username +" , "+ PasswirdValue + " ) ";
+    string Msg = "insert user values (null,'"+ Username +"' , '"+ PasswirdValue + "'); ";
+    cout<<Msg<<endl;
     if (mysql_query(Coon.get(), Msg.data()))
         return false;
     return true ;

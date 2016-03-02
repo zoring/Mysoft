@@ -15,7 +15,7 @@ public:
     enum { Name = 10 };
     enum { max_body_length = 1004 };
     ChatBuffer();
-    ChatBuffer(const char* buffer,int size);
+      void SetChatBuffer(char* buffer,int size);
     const char* data() const;
     char* data();
     int GetMsgSize();

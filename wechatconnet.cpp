@@ -1,10 +1,11 @@
 #include "wechatconnet.h"
 #include <boost/thread.hpp>
-
-WeChatConnet::WeChatConnet():We_io_service(),We_socket(We_io_service), We_endpoint(ip::address_v4::from_string("127.0.0.1"), 1200)
+#include "wechatcontrol.h"
+#include "chatbuffer.h"
+WeChatConnet::WeChatConnet(WeChatControl* control):We_io_service(),We_socket(We_io_service), We_endpoint(ip::address_v4::from_string("127.0.0.1"), 1200)
 {
     We_socket.connect(We_endpoint,ec);
-
+    Control = control ;
     if (ec)
     {
         std::cout << boost::system::system_error(ec).what() << std::endl;
@@ -22,7 +23,7 @@ bool WeChatConnet::IsConnet(ip::tcp::socket chatsocket, string address){
 }
 void WeChatConnet::ReadHandle(){
 
-
+       Control->PushBackFuntions();
       char*  messageBuffersd= new char[1024];
 
       We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));
@@ -41,20 +42,27 @@ bool WeChatConnet::SendIndividualMsg( const string& Msg = "finsh"){
 }
 
 bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system::error_code &e, size_t bytes){
-    cout<<"Has readed"<<endl;
+
      if (bytes == 0)
          return false;
      //读数据处理
-
-     for (size_t index=0; index < bytes;++index)
-     {cout<<MessageBuffers[index];
-
-     }
-    cout<<"this is ok"<<endl;
-    boost::shared_array<char> msg(MessageBuffers);
-
+     ChatBuffer Msg;
+     Msg.SetChatBuffer(MessageBuffers,bytes);
+     Msg.ShowTheMsg();
+     delete MessageBuffers ;
+     int cmmd = Msg.GetCmmd();
+     int userId = Msg.GetUserId();
+     int ToOtherId =  Msg.GetTargetId();
+     if (cmmd >= 99 or cmmd < 0)
+         return false;
+    string msg =Msg.GetBody();
+    string Name = Msg.GetName();
+    delete MessageBuffers;
+    Control->ReadMsgFromNet(cmmd,userId,ToOtherId,Name,msg);
      char*  messageBuffersd= new char[1024];
-      We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));
+     if (We_socket.is_open())
+     {cout<<"fdsf"<<endl;
+         We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));}
 
      return true;
 }

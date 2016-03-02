@@ -37,11 +37,17 @@ void LoginDialog::on_GetSightUpMsg(){
 
 void LoginDialog::on_LoginButton_clicked()
 {
-    if (CheckUserAndPassword()){
+    CheckUserAndPassword() ;
+
+}
+
+void LoginDialog::AllowLogin(bool IsOk){
+    cout<<"LoginDialog::AllowLogin"<< IsOk<<endl;
+    if (IsOk)
+    {
         IsLogin = true;
          control->IsConnet();
         accept();
-       //
     }
     else
     {
@@ -54,16 +60,19 @@ void LoginDialog::on_LoginButton_clicked()
     }
 }
 
-
-bool LoginDialog::CheckUserAndPassword(){
+void LoginDialog::CheckUserAndPassword(){
 
     control->CheckUser( ui->UserNameEdit->text().toStdString(), ui->PassWordEdit->text().toStdString());
-
-    return true;
-
 
 }
 
 bool LoginDialog::GetIsLogin(){
     return IsLogin;
+}
+
+
+
+void LoginDialog::AllowResign(bool Allow){
+     SightUpDialog->GetResightResult(Allow);
+
 }
