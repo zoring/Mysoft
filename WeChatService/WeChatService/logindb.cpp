@@ -7,7 +7,7 @@ LoginDB::LoginDB(MYSQL* coon):BaseDB(coon)
 
 }
 int LoginDB::IsLogin(string name,string PasswordValue){
-    string Msg = " select id from user where username = '" + name + "' and password  = '" + PasswordValue + "'" ;
+    string Msg = " select id from userid where username = '" + name + "' and password  = '" + PasswordValue + "'" ;
      MYSQL_RES *res;
       MYSQL_ROW row;
     if (mysql_query(Coon.get(), Msg.data()))
@@ -30,7 +30,7 @@ int LoginDB::IsLogin(string name,string PasswordValue){
 
 
 bool LoginDB::CanSigUP(string username){
-     string Msg = " select * from user where username = '" + username + "'" ;
+     string Msg = " select * from userid where username = '" + username + "'" ;
      cout<<Msg<<endl;
      if (mysql_query(Coon.get(), Msg.data()))
          {
@@ -60,8 +60,24 @@ bool LoginDB::SightUP(string Username, string PasswirdValue){
 }
 
 
-string LoginDB::LoadUserFriends(int UserId, string Password){
-    if (! IsLogin( UserId, Password))
-        return ;
-    string Msg = "select friendId, name from"
+string LoginDB::LoadUserFriends(int UserId,string userName, string Password){
+    if (! IsLogin( userName, Password))
+        return "";
+    string Msg = "select user.userd, user.username from user, friends where friends.userid = " +UserId ;
+    if (mysql_query(Coon.get(), Msg.data()))
+        {
+
+            return false;
+        }
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+    res = mysql_use_result(Coon.get());
+    string Buffer= "";
+
+    row = mysql_fetch_row(res);
+    while( row!= NULL)
+    {
+        cout<<"fdf"<<endl;
+    }
+
 }
