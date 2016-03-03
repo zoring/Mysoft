@@ -95,9 +95,9 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
         return;
     //读数据处理
    ChatBuffer Msg;
+    Msg.ShowTheMsg();
    Msg.SetChatBuffer(MessageBuffers,bytes);
    Msg.ShowTheMsg();
-   delete MessageBuffers ;
    int cmmd = Msg.GetCmmd();
    int userId = Msg.GetUserId();
    int ToOtherId =  Msg.GetTargetId();
@@ -105,6 +105,7 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
        return ;
   string msg =Msg.GetBody();
   string Name = Msg.GetName();
+  delete MessageBuffers ;
   WeChatfuntions[cmmd](cmmd,userId,ToOtherId,Name,msg,psocket) ;
    char*  messageBuffersd= new char[1024];
    psocket->async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatService::HandleRead,this,psocket,messageBuffersd,_1,_2));

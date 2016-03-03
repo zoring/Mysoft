@@ -57,7 +57,8 @@ SOURCES       = ../WeChatService/main.cpp \
 		../WeChatService/dbcontrol.cpp \
 		../WeChatService/logindb.cpp \
 		../WeChatService/logincontrol.cpp \
-		../WeChatService/chatbuffer.cpp 
+		../WeChatService/chatbuffer.cpp \
+		../WeChatService/friendsbuffer.cpp 
 OBJECTS       = main.o \
 		wechatservice.o \
 		userservice.o \
@@ -67,7 +68,8 @@ OBJECTS       = main.o \
 		dbcontrol.o \
 		logindb.o \
 		logincontrol.o \
-		chatbuffer.o
+		chatbuffer.o \
+		friendsbuffer.o
 DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -205,7 +207,8 @@ DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		dbcontrol.h \
 		logindb.h \
 		logincontrol.h \
-		chatbuffer.h ../WeChatService/main.cpp \
+		chatbuffer.h \
+		friendsbuffer.h ../WeChatService/main.cpp \
 		../WeChatService/wechatservice.cpp \
 		../WeChatService/userservice.cpp \
 		../WeChatService/userdb.cpp \
@@ -214,7 +217,8 @@ DIST          = ../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../WeChatService/dbcontrol.cpp \
 		../WeChatService/logindb.cpp \
 		../WeChatService/logincontrol.cpp \
-		../WeChatService/chatbuffer.cpp
+		../WeChatService/chatbuffer.cpp \
+		../WeChatService/friendsbuffer.cpp
 QMAKE_TARGET  = WeChatService
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = WeChatService
@@ -559,7 +563,8 @@ wechatservice.o: ../WeChatService/wechatservice.cpp ../WeChatService/wechatservi
 		../WeChatService/connetdb.h \
 		../WeChatService/logincontrol.h \
 		../WeChatService/logindb.h \
-		../WeChatService/basedb.h
+		../WeChatService/basedb.h \
+		../WeChatService/chatbuffer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wechatservice.o ../WeChatService/wechatservice.cpp
 
 userservice.o: ../WeChatService/userservice.cpp ../WeChatService/userservice.h
@@ -590,6 +595,9 @@ logincontrol.o: ../WeChatService/logincontrol.cpp ../WeChatService/logincontrol.
 
 chatbuffer.o: ../WeChatService/chatbuffer.cpp ../WeChatService/chatbuffer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o chatbuffer.o ../WeChatService/chatbuffer.cpp
+
+friendsbuffer.o: ../WeChatService/friendsbuffer.cpp ../WeChatService/friendsbuffer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o friendsbuffer.o ../WeChatService/friendsbuffer.cpp
 
 ####### Install
 

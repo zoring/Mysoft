@@ -22,7 +22,7 @@ void ChatBuffer::SetCmmd(int cmmd){
      std::stringstream ss;
      ss << cmmd;
      std::string str = ss.str();
-     memcpy(data_, str.c_str(), Cmmd_length);
+     memcpy(data_, str.c_str(), str.size());
 }
 
 
@@ -32,7 +32,7 @@ void ChatBuffer::SetUserId(int userid){
     std::stringstream ss;
     ss << userid;
     std::string str = ss.str();
-    memcpy(data_ + Cmmd_length, str.c_str(), useriD_length);
+    memcpy(data_ + Cmmd_length, str.c_str(), str.size());
 }
 
 void ChatBuffer::SetTargetId(int targetid){
@@ -42,7 +42,7 @@ void ChatBuffer::SetTargetId(int targetid){
     ss << targetid;
     std::string str = ss.str();
     int move = Cmmd_length +useriD_length;
-    memcpy(data_+ move,str.c_str(), TargetId_length) ;
+    memcpy(data_+ move,str.c_str(), str.size()) ;
 }
 
 void ChatBuffer::SetName(string name){

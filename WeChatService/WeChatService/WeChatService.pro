@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     dbcontrol.cpp \
     logindb.cpp \
     logincontrol.cpp \
-    chatbuffer.cpp
+    chatbuffer.cpp \
+    friendsbuffer.cpp
 
 HEADERS += \
     wechatservice.h \
@@ -23,6 +24,7 @@ HEADERS += \
     dbcontrol.h \
     logindb.h \
     logincontrol.h \
-    chatbuffer.h
+    chatbuffer.h \
+    friendsbuffer.h
 
 LIBS +=  -lboost_system -lboost_thread -lmysqlclient -lboost_signals

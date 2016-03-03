@@ -22,8 +22,8 @@ PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, char* Ues
     this->SiginWord = new QLabel(this);
   QString QUesrName(UesrName);
   QString   QSignWord(SignWord);
-    UserName->setText("&QUesrName");
-    SiginWord->setText("QSignWord");
+    UserName->setText(QUesrName);
+    SiginWord->setText(QSignWord);
     if(ImageUrl == NULL || ImageUrl == "")
     {
         ImageUrl = "./1.png";

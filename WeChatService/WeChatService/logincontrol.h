@@ -8,7 +8,9 @@ public:
     LoginControl();
     int IsLogin(string userName, string Password);
     bool SightUp(string UserName, string Password);
+    string LoadUserFriends(int UserId, string Password);
 private:
+
      ConnetDB* conn;
      LoginDB* Login;
 };

@@ -7,6 +7,7 @@ public:
     LoginDB(MYSQL* coon);
     int IsLogin(string idValue,string PasswordValue);
     bool SightUP(string username, string PasswordValue);
+    string LoadUserFriends(int UserId, string Password);
 private :
     bool CanSigUP(string username);
 };

@@ -25,8 +25,7 @@ void WeChatControl::SendMsgToNet( int cmmd,int Userid,int Targetid,string userna
    sendMsg.SetName(username);
    sendMsg.SetBody(msg);
 
-   cout<<sendMsg.GetBody()<<endl;
-   cout<<"endl"<<endl;
+  sendMsg.ShowTheMsg();
     NetWorkConnet->SendIndividualMsg(string(sendMsg.data(),1024));
 //    boost::bind(&WeChatConnet::SendIndividualMsg,NetWorkConnet,msg);
 }

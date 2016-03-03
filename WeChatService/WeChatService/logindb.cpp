@@ -58,3 +58,10 @@ bool LoginDB::SightUP(string Username, string PasswirdValue){
         return false;
     return true ;
 }
+
+
+string LoginDB::LoadUserFriends(int UserId, string Password){
+    if (! IsLogin( UserId, Password))
+        return ;
+    string Msg = "select friendId, name from"
+}
