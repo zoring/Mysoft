@@ -10,7 +10,7 @@ WeChatControl::WeChatControl()
     NetWorkConnet = new WeChatConnet(this);
     dlg= new LoginDialog(this);
     dlg->show();
-    //toshow = new NetMsgToShow(this);
+    toshow = new NetMsgToShow(this);
     //toshow = new NetMsgToShow(this);
 }
 
@@ -70,7 +70,7 @@ void WeChatControl::ReadMsgFromNet(int cmmd, int Userid, int Targetid, string us
 void WeChatControl::ReadCheckUser(int cmmd, int Userid, int Targetid, string username, string msg){
     if (cmmd != 1)
         return ;
-    dlg->AllowLogin(true);
+   emit CheckResultFromService(Userid);
 }
 
 void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string username, string msg){

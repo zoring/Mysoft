@@ -4,6 +4,7 @@
 #include "chatbuffer.h"
 WeChatConnet::WeChatConnet(WeChatControl* control):We_io_service(),We_socket(We_io_service), We_endpoint(ip::address_v4::from_string("127.0.0.1"), 1200)
 {
+    cout<<"WeChatConnet::WeChat"<<endl;
     We_socket.connect(We_endpoint,ec);
     Control = control ;
     if (ec)
@@ -49,7 +50,6 @@ bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system:
      ChatBuffer Msg;
      Msg.SetChatBuffer(MessageBuffers,bytes);
      Msg.ShowTheMsg();
-     delete MessageBuffers ;
      int cmmd = Msg.GetCmmd();
      int userId = Msg.GetUserId();
      int ToOtherId =  Msg.GetTargetId();

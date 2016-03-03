@@ -25,7 +25,7 @@ private slots:
     void on_LoginButton_clicked();
     void on_SightButton_clicked();
     void on_GetSightUpMsg();
-
+    void CheckResult(bool checkresult);
 private:
     Ui::LoginDialog *ui;
     void CheckUserAndPassword();

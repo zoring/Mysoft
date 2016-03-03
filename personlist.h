@@ -18,7 +18,8 @@ public:
     bool StaticMainWindow();
     bool AddGround(std::string GroundName); //增加组
     //bool DelGround(PersonGroundItem Grounds);//删除组
-
+public slots:
+    void GetMsg(int number);
 private:
     int UserId;
     std::list<PersonGroundItem> Grouds;   // 组容器
@@ -28,7 +29,7 @@ private:
     NetMsgToShow *NetToshow;
 signals:
 
-public slots:
+
 };
 
 #endif // PERSONLIST_H

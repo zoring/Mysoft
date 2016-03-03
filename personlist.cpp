@@ -10,12 +10,12 @@
 #include "QVBoxLayout"
 #include "QHBoxLayout"
 #include "persongrounditem.h"
+#include "netmsgtoshow.h"
 PersonList::PersonList(NetMsgToShow *NetToshow,QListWidget *parent) : QListWidget(parent),NetToshow(NetToshow)
 {
 
+connect(this->NetToshow,&NetMsgToShow::StattionFriends,this,&PersonList::GetMsg );
 
-
-StaticMainWindow();
 }
 
 //初始化聊天界面
@@ -84,3 +84,8 @@ bool PersonList::AddGround(string GroundName){
 
 //}
 
+
+
+void PersonList::GetMsg(int number){
+    StaticMainWindow();
+}

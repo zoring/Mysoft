@@ -1,30 +1,36 @@
 #include "logindb.h"
-
+#include <stdlib.h>
+#include <iostream>
+using namespace std ;
 LoginDB::LoginDB(MYSQL* coon):BaseDB(coon)
 {
 
 }
-bool LoginDB::IsLogin(string idValue,string PasswordValue){
-    string Msg = " select * from user where id = '" + idValue + "' and password  = '" + PasswordValue + "'" ;
+int LoginDB::IsLogin(string name,string PasswordValue){
+    string Msg = " select id from user where username = '" + name + "' and password  = '" + PasswordValue + "'" ;
      MYSQL_RES *res;
       MYSQL_ROW row;
     if (mysql_query(Coon.get(), Msg.data()))
         {
 
-            return false;
+            return 0;
         }
     res = mysql_use_result(Coon.get());
+
     if ((row = mysql_fetch_row(res)) == NULL)
     {    mysql_free_result(res);
-        return false;
+        return 0;
     }
+
+    cout<<row[0]<<endl;
+    int userId = atoi(row[0]) ;
     mysql_free_result(res);
-    return true;
+    return userId;
 }
 
 
 bool LoginDB::CanSigUP(string username){
-     string Msg = " select * from user where name = '" + username + "'" ;
+     string Msg = " select * from user where username = '" + username + "'" ;
      cout<<Msg<<endl;
      if (mysql_query(Coon.get(), Msg.data()))
          {

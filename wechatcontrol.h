@@ -8,8 +8,9 @@ class NetMsgToShow;
 #include <boost/function.hpp>
 
 
-class WeChatControl
+class WeChatControl  : public QObject
 {
+    Q_OBJECT
 public:
     WeChatControl();
     void SendMsgToNet(int cmmd,int Userid,int Targetid,string username,string msg);
@@ -18,6 +19,10 @@ public:
     bool ResightUser(const string userName, const string Password);
     void ReadMsgFromNet(int cmmd,int Userid,int Targetid,string username,string msg );
     void PushBackFuntions();
+   signals:
+    void CheckResultFromService(bool result);
+
+
 private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;

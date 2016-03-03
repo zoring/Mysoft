@@ -36,8 +36,8 @@ HEADERS  += mainwindow.h \
     persondata.h \
     chatdialog.h \
     wechatconnet.h \
-    wechatcontrol.h \
     netmsgtoshow.h \
+    wechatcontrol.h \
     chatbuffer.h
 
 FORMS    += mainwindow.ui \

@@ -6,7 +6,7 @@ class LoginControl
 {
 public:
     LoginControl();
-    bool IsLogin(int id, string Password);
+    int IsLogin(string userName, string Password);
     bool SightUp(string UserName, string Password);
 private:
      ConnetDB* conn;

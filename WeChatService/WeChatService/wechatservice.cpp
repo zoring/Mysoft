@@ -36,12 +36,13 @@ void WeChatService::SightUp(int cmmd,int UserId, int TargetId,string UserName, s
 
 void WeChatService::CheackLogin(int cmmd, int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
     cout<<" WeChatService::CheackLogin" <<endl;
-    if(!loginControl->IsLogin(UserId,Msg))
-        SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
-    else
-    {AlwaysUserMap[UserId] = psocket;
-    SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,"");
-    }
+
+     UserId = loginControl->IsLogin(UserName,Msg) ;
+     cout<<UserId<<endl;
+    if(UserId)
+        AlwaysUserMap[UserId] = psocket;
+    SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
+
 }
 
 void WeChatService::SerchMsg(int cmmd,int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){

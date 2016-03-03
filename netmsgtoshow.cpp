@@ -3,10 +3,11 @@
 #include <boost/bind.hpp>
 #include "personlist.h"
 #include <iostream>
-NetMsgToShow::NetMsgToShow(WeChatControl *WeCtrol):WeCtrol(WeCtrol)
-{    cout<<"fdsf"<<endl;
-     ad = new PersonList(this);
 
+NetMsgToShow::NetMsgToShow(WeChatControl *WeCtrol):WeCtrol(WeCtrol)
+{    cout<<"NetMsgToShow::NetMsgToShow"<<endl;
+     ad = new PersonList(this);
+     cout<<"NetMsgToShow"<<endl;
 }
 
 void NetMsgToShow::ReviceMsg(int PersonId,string msg){
@@ -23,5 +24,9 @@ bool NetMsgToShow::SendMsg(const int ReviceId, const string msg){
 void NetMsgToShow::LoginShow(){
 cout<<"dfdsf"<<endl;
  // ad->StaticMainWindow();
-  ad->show();
+int k=9;
+ emit NetMsgToShow::StattionFriends(k);
+
 }
+
+

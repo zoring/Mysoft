@@ -13,6 +13,7 @@ LoginDialog::LoginDialog(WeChatControl* control,QWidget *parent) :
    this->connect(ui->SightUp,&QPushButton::clicked,this,&LoginDialog::on_SightButton_clicked);
 
     this->connect(SightUpDialog->GetButton(),&QPushButton::clicked,this,&LoginDialog::on_GetSightUpMsg);
+     this->connect(this->control,&WeChatControl::CheckResultFromService,this,&LoginDialog::CheckResult);
 }
 
 LoginDialog::~LoginDialog()
@@ -75,4 +76,9 @@ bool LoginDialog::GetIsLogin(){
 void LoginDialog::AllowResign(bool Allow){
      SightUpDialog->GetResightResult(Allow);
 
+}
+
+
+void LoginDialog::CheckResult(bool checkresult){
+   LoginDialog::AllowLogin(checkresult);
 }
