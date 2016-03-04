@@ -13,6 +13,7 @@ public:
     bool SaveMsg(string Tab,string key,string value,string other);
     bool DeleteMsg(string Tab,string key,string value,string other);
     bool UpDateMsg(string Tab,string key,string value,string other);
+    string IntToString(int number);
 protected:
     boost::shared_ptr<MYSQL> Coon;
 private:

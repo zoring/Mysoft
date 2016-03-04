@@ -7,7 +7,7 @@ LoginDB::LoginDB(MYSQL* coon):BaseDB(coon)
 
 }
 int LoginDB::IsLogin(string name,string PasswordValue){
-    string Msg = " select id from userid where username = '" + name + "' and password  = '" + PasswordValue + "'" ;
+    string Msg = " select userid from user where username = '" + name + "' and password  = '" + PasswordValue + "'" ;
      MYSQL_RES *res;
       MYSQL_ROW row;
     if (mysql_query(Coon.get(), Msg.data()))
@@ -22,7 +22,6 @@ int LoginDB::IsLogin(string name,string PasswordValue){
         return 0;
     }
 
-    cout<<row[0]<<endl;
     int userId = atoi(row[0]) ;
     mysql_free_result(res);
     return userId;
@@ -30,7 +29,7 @@ int LoginDB::IsLogin(string name,string PasswordValue){
 
 
 bool LoginDB::CanSigUP(string username){
-     string Msg = " select * from userid where username = '" + username + "'" ;
+     string Msg = " select * from user where username = '" + username + "'" ;
      cout<<Msg<<endl;
      if (mysql_query(Coon.get(), Msg.data()))
          {
@@ -60,24 +59,32 @@ bool LoginDB::SightUP(string Username, string PasswirdValue){
 }
 
 
-string LoginDB::LoadUserFriends(int UserId,string userName, string Password){
-    if (! IsLogin( userName, Password))
-        return "";
-    string Msg = "select user.userd, user.username from user, friends where friends.userid = " +UserId ;
+vector<boost::shared_ptr<string> > LoginDB::LoadUserFriends(int UserId){
+      vector< boost::shared_ptr<string> > friendsBuffer;
+
+    string Msg = " select user.userid, user.username from user, friends where friends.userid = " + IntToString(UserId) ;
+    Msg += " and  friends.friendid = user.userid";
     if (mysql_query(Coon.get(), Msg.data()))
         {
 
-            return false;
+            return friendsBuffer ;
         }
     MYSQL_RES *res;
     MYSQL_ROW row;
     res = mysql_use_result(Coon.get());
-    string Buffer= "";
 
-    row = mysql_fetch_row(res);
-    while( row!= NULL)
-    {
-        cout<<"fdf"<<endl;
+
+    while ((row = mysql_fetch_row(res)) != NULL)
+    {	boost::shared_ptr<string> buffer(new string(""));
+         for (int i = 0; i< mysql_num_fields(res);i++)
+         {
+            *(buffer.get()) += row[i];
+
+
+         }
+         friendsBuffer.push_back(buffer);
     }
 
+    mysql_free_result(res);
+    return friendsBuffer;
 }

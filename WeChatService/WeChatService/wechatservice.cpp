@@ -1,5 +1,6 @@
 #include "wechatservice.h"
 #include "chatbuffer.h"
+#include "friendsbuffer.h"
 #include <boost/thread.hpp>
 WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):message_iosev(msg_iosev), Funtion_iosev(fun_iosev),
                              ReadInMegPoint(tcp::v4(), 1200), ReadGroundMegPoint(ip::udp::v4(), 1200), FuntionPoint(ip::udp::v4(), 1201),
@@ -36,14 +37,49 @@ void WeChatService::SightUp(int cmmd,int UserId, int TargetId,string UserName, s
 
 void WeChatService::CheackLogin(int cmmd, int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
     cout<<" WeChatService::CheackLogin" <<endl;
-
+ cout<<UserName<<":"<<Msg<<endl;
      UserId = loginControl->IsLogin(UserName,Msg) ;
-     cout<<UserId<<endl;
+    cout<<"UserId:"<<UserId<<endl;
     if(UserId)
-        AlwaysUserMap[UserId] = psocket;
-    SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
+       { AlwaysUserMap[UserId] = psocket;
+        cout<<"UserId:"<<UserId<<endl;
+         SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
+         LoadFriendsMsg(cmmd,UserId,TargetId,UserName,Msg,psocket);
+        }
+    else
+         SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
+
 
 }
+
+void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string userName, string Msg, boost::shared_ptr<tcp::socket> psocket){
+    cout<<"Hello"<<endl;
+    vector<boost::shared_ptr<string> > MsgBuffer = loginControl->LoadUserFriends(UserId);
+    friendsBuffer FriendsMsg;
+    int max=0;
+    max = MsgBuffer.size();
+    Msg = "";
+    for(vector<boost::shared_ptr<string> >::iterator iter= MsgBuffer.begin(); iter != MsgBuffer.end();++iter){
+
+        FriendsMsg.SetFriendsBuffer(*((*iter).get()));
+        if (FriendsMsg.GetMsgSize() >= 71)
+        {
+          FriendsMsg.ShowFriendsMsg();
+          //SendIndividualMessage(psocket,cmmd,UserId,max,userName,FriendsMsg.data());
+          FriendsMsg.ResetBuffer();
+
+        }
+
+    }
+    if (FriendsMsg.GetMsgSize())
+    {
+         FriendsMsg.ShowFriendsMsg();
+        //SendIndividualMessage(psocket,cmmd,UserId,max,userName,FriendsMsg.data());
+        FriendsMsg.ResetBuffer();
+
+    }
+}
+
 
 void WeChatService::SerchMsg(int cmmd,int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
 

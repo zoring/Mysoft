@@ -17,3 +17,10 @@ bool LoginControl::SightUp(string UserName, string Password){
 
     return Login->SightUP(UserName, Password) ;
 }
+
+
+
+
+vector<boost::shared_ptr<string> >  LoginControl::LoadUserFriends(int UserId){
+    return Login->LoadUserFriends(UserId) ;
+}

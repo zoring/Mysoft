@@ -12,7 +12,8 @@ class friendsBuffer
 public:
     enum { friendsAmount = 2 };
     enum { max_body_length = 1002 };
-    enum { max= 41} ;
+    enum {one_msg = 14};
+    enum { max= 71} ;
     friendsBuffer();
     const char* data() const;
     char* data();
@@ -20,13 +21,16 @@ public:
     int GetMsgSize();
     int GetAmouts();
     string GetFriendsBuffer();
+    void ResetBuffer();
 
-    void SetFriendAmout(int Amout);
     void SetFriendsBuffer(string buffer);
+
+
+    void ShowFriendsMsg();
 private:
 char data_[friendsAmount + max_body_length] ;
 size_t body_length_;
-
+ void SetFriendAmout(int Amout);
 };
 
 #endif // FRIENDSBUFFER_H

@@ -32,3 +32,11 @@ string BaseDB::FindMsg(string Table, string name,string key, string value, strin
 bool BaseDB::UpDateMsg(string Tab, string key, string value, string other){
 
 }
+
+
+string BaseDB::IntToString(int number){
+    std::stringstream ss;
+    ss << number;
+    std::string str = ss.str();
+    return str;
+}
