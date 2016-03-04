@@ -21,6 +21,7 @@ public:
     void ReadHandle();
     void SendHandle(char* buffer);
 
+
 private :
     WeChatControl* Control;
     io_service We_io_service;

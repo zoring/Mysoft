@@ -30,3 +30,7 @@ int k=9;
 }
 
 
+void NetMsgToShow::LoadFriendMsg(vector<string> Msg){
+    emit FriendsMsgFeomService( Msg);
+
+}

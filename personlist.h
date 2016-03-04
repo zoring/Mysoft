@@ -8,7 +8,7 @@ class NetMsgToShow;
 #include <QVBoxLayout>
 #include <iostream>
 #include <list>
-
+#include <vector>
 
 class PersonList : public QListWidget
 {
@@ -20,13 +20,15 @@ public:
     //bool DelGround(PersonGroundItem Grounds);//删除组
 public slots:
     void GetMsg(int number);
+    void GetFriendsMsg(vector<string> Msg);
 private:
     int UserId;
     std::list<PersonGroundItem> Grouds;   // 组容器
-    bool StaticList( QVBoxLayout* layout);
+    bool StaticList( vector<string> FriensMsg);
     bool StaticGround(std::string keys);
     int  OnChageGround();
     NetMsgToShow *NetToshow;
+    QVBoxLayout* StaticLists;
 signals:
 
 

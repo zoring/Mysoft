@@ -15,7 +15,7 @@ PersonList::PersonList(NetMsgToShow *NetToshow,QListWidget *parent) : QListWidge
 {
 
 connect(this->NetToshow,&NetMsgToShow::StattionFriends,this,&PersonList::GetMsg );
-
+connect(this->NetToshow,&NetMsgToShow::FriendsMsgFeomService,this,&PersonList::GetFriendsMsg);
 }
 
 //初始化聊天界面
@@ -23,13 +23,13 @@ bool PersonList::StaticMainWindow(){
 
  QHBoxLayout* Hlayout = new QHBoxLayout();
  QVBoxLayout* layout = new QVBoxLayout();
-  QVBoxLayout* StaticLists = new QVBoxLayout();
+   StaticLists = new QVBoxLayout();
 QPushButton* FriendButton = new QPushButton("Friend");
 QPushButton* GroundButton = new QPushButton("Ground");
 Hlayout->addWidget(FriendButton);
 
 Hlayout->addWidget(GroundButton);
-StaticList(StaticLists);
+//StaticList(StaticLists);
  layout->addItem(Hlayout);
  layout->addItem(StaticLists);
 //this->setLayout(layout);
@@ -40,11 +40,16 @@ this->show();
 
 
 //获取组信息
-bool PersonList::StaticList( QVBoxLayout* layout){
-
-     for (int i =0; i<=10;i++)
+bool PersonList::StaticList( vector<string> friendsMsg){
+   int i=0;
+     for (vector<string>::iterator iter = friendsMsg.begin(); iter !=friendsMsg.end();++iter, ++i)
      {
-         PersonGroundItem*  test = new PersonGroundItem(NetToshow,i,"fd","erf");
+
+
+         string userid = (*iter).substr(0,4);
+         string username = (*iter).substr(4,(*iter).size());
+         int usrId = atoi(userid.c_str());
+         PersonGroundItem*  test = new PersonGroundItem(NetToshow,usrId,username.c_str(),"erf");
           QListWidgetItem* v= new QListWidgetItem();
          v->setSizeHint(QSize(100,120));
 
@@ -88,4 +93,9 @@ bool PersonList::AddGround(string GroundName){
 
 void PersonList::GetMsg(int number){
     StaticMainWindow();
+}
+
+
+void PersonList::GetFriendsMsg(vector<string> Msg){
+    StaticList(Msg);
 }

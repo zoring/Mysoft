@@ -23,7 +23,7 @@ class PersonGroundItem: public QWidget
 {
 
 public:
-      PersonGroundItem(NetMsgToShow* NetToShow,int UserId, char* UesrName, char* SiginWord, char* IamgeUrl="",QWidget *parent=0);
+      PersonGroundItem(NetMsgToShow* NetToShow,int UserId, const char* UesrName, char* SiginWord, char* IamgeUrl="",QWidget *parent=0);
 
 public:
     void AddPerson(Person const Personid);

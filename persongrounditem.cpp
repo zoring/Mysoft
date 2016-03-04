@@ -14,7 +14,7 @@
 #include "netmsgtoshow.h"
 #include "chatdialog.h"
 using namespace std;
-PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, char* UesrName, char* SignWord, char* ImageUrl,QWidget *parent):QWidget(parent), NetToShow(NetToShow)
+PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const char* UesrName, char* SignWord, char* ImageUrl,QWidget *parent):QWidget(parent), NetToShow(NetToShow)
 {
 
     this->UserId = UserId;

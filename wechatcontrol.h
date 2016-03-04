@@ -6,7 +6,7 @@ class NetMsgToShow;
 #include "logindialog.h"
 #include <QObject>
 #include <boost/function.hpp>
-
+#include <vector>
 
 class WeChatControl  : public QObject
 {
@@ -22,17 +22,18 @@ public:
    signals:
     void CheckResultFromService(bool result);
 
-
 private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;
     LoginDialog* dlg;
+    vector<string>  FriendsMsg;
+    int FriendNumbers;
     void ReadIndivideMsg(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadResightUser(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadCheckUser(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadReadGroundMsg(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadFuntionMsg(int cmmd,int Userid,int Targetid,string username,string msg);
-
+    void ReadFriendsMsg(int cmmd,int Userid,int Targetid,string username,string msg);
     vector< boost::function<void (int ,int , int , string, string)> > ReadControlFuntions;
 
 

@@ -65,7 +65,7 @@ void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string us
         if (FriendsMsg.GetMsgSize() >= 71)
         {
           FriendsMsg.ShowFriendsMsg();
-          //SendIndividualMessage(psocket,cmmd,UserId,max,userName,FriendsMsg.data());
+          SendIndividualMessage(psocket,2,UserId,max,userName,FriendsMsg.data());
           FriendsMsg.ResetBuffer();
 
         }
@@ -74,7 +74,7 @@ void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string us
     if (FriendsMsg.GetMsgSize())
     {
          FriendsMsg.ShowFriendsMsg();
-        //SendIndividualMessage(psocket,cmmd,UserId,max,userName,FriendsMsg.data());
+        SendIndividualMessage(psocket,2,UserId,max,userName,FriendsMsg.data());
         FriendsMsg.ResetBuffer();
 
     }

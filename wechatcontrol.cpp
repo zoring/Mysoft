@@ -4,9 +4,11 @@
 #include "netmsgtoshow.h"
 #include <iostream>
 #include "chatbuffer.h"
+#include "friendsbuffer.h"
 using namespace std;
 WeChatControl::WeChatControl()
 {
+    FriendNumbers = 0;
     NetWorkConnet = new WeChatConnet(this);
     dlg= new LoginDialog(this);
     dlg->show();
@@ -73,7 +75,7 @@ void WeChatControl::ReadCheckUser(int cmmd, int Userid, int Targetid, string use
 }
 
 void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string username, string msg){
-    cout<< "OK"<<endl;
+
     if (cmmd != 0)
         return ;
     if (Targetid)
@@ -82,4 +84,21 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
         }
     else
         dlg->AllowResign(false);
+}
+
+
+void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string username, string msg){
+    if (cmmd !=2)
+        return ;
+    friendsBuffer friendMsg;
+    friendMsg.SetFriendsBuffer(msg);
+    int cnt = friendMsg.GetAmouts();
+    for (int i= 0;i<cnt;i++)
+    {
+        string buffer = friendMsg.GetOneFriendMsg(i) ;
+        FriendsMsg.push_back(buffer);
+    }
+    FriendNumbers += cnt ;
+    if(FriendNumbers >= Max)
+        toshow->LoadFriendMsg(FriendsMsg);
 }

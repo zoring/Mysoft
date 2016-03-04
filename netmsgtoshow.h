@@ -16,8 +16,11 @@ public:
     void ReviceMsg(int PersonId,string msg);
     bool SendMsg(int ReviceId, string mag);
     void LoginShow();
+    void LoadFriendMsg(vector<string> Msg);
 signals:
     void StattionFriends(int number);
+    void FriendsMsgFeomService(vector<string> Msg);
+
 private :
     WeChatControl   *WeCtrol;
     PersonList* ad;
