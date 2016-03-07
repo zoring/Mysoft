@@ -2,6 +2,7 @@
 
 PersonData::PersonData()
 {
-
+       setUserId(0);
+       setUserName("");
 }
 

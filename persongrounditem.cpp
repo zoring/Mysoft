@@ -14,10 +14,11 @@
 #include "netmsgtoshow.h"
 #include "chatdialog.h"
 using namespace std;
-PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const char* UesrName, char* SignWord, char* ImageUrl,QWidget *parent):QWidget(parent), NetToShow(NetToShow)
+PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const char* UesrName, char* SignWord, map<int, ChatDialog*>  &FriendChatMap,char* ImageUrl,
+                                  QWidget *parent):QWidget(parent), NetToShow(NetToShow),FriendChatMap(FriendChatMap),UserId(UserId)
 {
 
-    this->UserId = UserId;
+
     this->UserName = new QLabel(this);
     this->SiginWord = new QLabel(this);
   QString QUesrName(UesrName);
@@ -37,16 +38,23 @@ PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const cha
    UserName->move(54,10);
    SiginWord->move(54,27);
 
-
   PersonImage->installEventFilter(this);
 
 }
 
 void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
     if(event->button() == Qt::LeftButton) {
-
-        ChatDialog* test =  new ChatDialog(NetToShow);
+        if (FriendChatMap.find(UserId) == FriendChatMap.end())
+        {ChatDialog* test =  new ChatDialog(NetToShow,this);
          test->show();
+         FriendChatMap[UserId] = test;
+          test->activateWindow();
+        }
+        else
+        {
+            FriendChatMap[UserId]->activateWindow();;
+
+        }
     }
 }
 
@@ -88,3 +96,16 @@ bool PersonGroundItem::operator ==(const PersonGroundItem& other){
     return true;
 }
 
+
+void PersonGroundItem::PushBackNotReadMsg(string Msg){
+    NotReadMsg.push_back(Msg);
+}
+
+
+vector<string>& PersonGroundItem::PopNotReadMsg(){
+    return NotReadMsg;
+}
+
+const int PersonGroundItem::GetUserId(){
+    return UserId;
+}

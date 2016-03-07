@@ -23,7 +23,7 @@ public:
     string GetFriendsBuffer();
     void ResetBuffer();
 
-    void SetFriendsBuffer(string buffer);
+    void SetFriendsBuffer(char* buffer);
 
     string GetOneFriendMsg(int index);
     void ShowFriendsMsg();

@@ -19,6 +19,9 @@ class PersonData
 public:
     PersonData();
 
+GetSetNameOfProperty (std::string, UserName, private)
+GetSetNameOfProperty (int, UserId, private)
+
 };
 
 #endif // PERSONDATA_H

@@ -18,6 +18,9 @@ public:
       void SetChatBuffer(char* buffer,int size);
     const char* data() const;
     char* data();
+    const char* body() const;
+     char* body() ;
+
     int GetMsgSize();
 //    size_t length() const;
 //    const char* body() const;

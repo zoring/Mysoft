@@ -43,13 +43,16 @@ bool WeChatConnet::SendIndividualMsg( const string& Msg = "finsh"){
 }
 
 bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system::error_code &e, size_t bytes){
+    char*  messageBuffersd= new char[1024];
 
+    We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));
      if (bytes == 0)
          return false;
-     //读数据处理
+
+         //读数据处理
+     cout<<"Has Read Finsh"<<endl;
      ChatBuffer Msg;
      Msg.SetChatBuffer(MessageBuffers,bytes);
-     Msg.ShowTheMsg();
      int cmmd = Msg.GetCmmd();
      int userId = Msg.GetUserId();
      int ToOtherId =  Msg.GetTargetId();
@@ -58,11 +61,10 @@ bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system:
     string msg =Msg.GetBody();
     string Name = Msg.GetName();
     delete MessageBuffers;
+    if (cmmd!=80)
     Control->ReadMsgFromNet(cmmd,userId,ToOtherId,Name,msg);
-     char*  messageBuffersd= new char[1024];
-     if (We_socket.is_open())
-     {cout<<"fdsf"<<endl;
-         We_socket.async_read_some(buffer(messageBuffersd,1024),boost::bind(&WeChatConnet::ReadIndividualMsg,this,messageBuffersd,_1,_2));}
+    else
+       Control->ReadFriendsMsg(cmmd,userId,ToOtherId,Name,Msg.body());
 
      return true;
 }

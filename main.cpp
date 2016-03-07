@@ -15,12 +15,12 @@
 #include "persongrounditem.h"
 #include "personlist.h"
 #include "wechatcontrol.h"
-
+#include <QMetaType>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
+      qRegisterMetaType<vector<string> >("vector<string>");
         QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());//设置编码
         WeChatControl* adf = new WeChatControl();
          return a.exec();

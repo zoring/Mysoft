@@ -37,9 +37,8 @@ void friendsBuffer::SetFriendsBuffer(string buffer){
     if ( buffer.size() > max_body_length)
         return ;
 
-     memcpy(data_ + friendsAmount + body_length_*one_msg, buffer.c_str(), buffer.size());
-      body_length_++;
-      SetFriendAmout(body_length_);
+
+
 }
 
 int friendsBuffer::GetAmouts(){
@@ -63,4 +62,18 @@ void friendsBuffer::ShowFriendsMsg(){
 
     }
     cout<<endl;
+}
+
+void friendsBuffer::SetOneFriendsBuffer(int index, string buffer){
+    int move = 0;
+    if (!(index %2))
+     {move = friendsAmount +(index/2)*14 ;
+
+    }
+    else
+       {move = friendsAmount + (index/2)*14 + 4;
+        body_length_++;
+        SetFriendAmout(body_length_);
+    }
+    memcpy(data_ + move, buffer.c_str(), buffer.size());
 }

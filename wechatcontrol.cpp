@@ -4,6 +4,7 @@
 #include "netmsgtoshow.h"
 #include <iostream>
 #include "chatbuffer.h"
+#include "persondata.h"
 #include "friendsbuffer.h"
 using namespace std;
 WeChatControl::WeChatControl()
@@ -13,6 +14,7 @@ WeChatControl::WeChatControl()
     dlg= new LoginDialog(this);
     dlg->show();
     toshow = new NetMsgToShow(this);
+    UserMsg = new PersonData();
     //toshow = new NetMsgToShow(this);
 }
 
@@ -21,6 +23,7 @@ void WeChatControl::SendMsgToNet( int cmmd,int Userid,int Targetid,string userna
    ChatBuffer sendMsg;
    if (cmmd >99 || Userid >=10000 || Targetid >=10000|| username.size() >=10 || msg.size() >= 1004)
        return ;
+   Userid = UserMsg->getUserId();
    sendMsg.SetCmmd(cmmd);
    sendMsg.SetUserId(Userid);
    sendMsg.SetTargetId(Targetid);
@@ -36,6 +39,7 @@ void WeChatControl::PushBackFuntions(){
     //防止boost的线程不一致
     ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadResightUser ,this,_1,_2,_3,_4,_5));
     ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadCheckUser ,this,_1,_2,_3,_4,_5));
+    ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadIndivideMsg ,this,_1,_2,_3,_4,_5));
 }
 
 bool WeChatControl::IsConnet(){
@@ -62,6 +66,7 @@ bool WeChatControl::ResightUser(const string userName, const string Password){
 }
 void WeChatControl::ReadMsgFromNet(int cmmd, int Userid, int Targetid, string username, string msg){
     cout<<"WeChatControl::ReadMsgFromNet" << cmmd<<endl;
+
     ReadControlFuntions[cmmd](cmmd,Userid, Targetid, username,msg ) ;
 }
 
@@ -78,6 +83,8 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
 
     if (cmmd != 0)
         return ;
+    UserMsg->setUserId(Userid);
+    UserMsg->setUserName(username);
     if (Targetid)
        { dlg->AllowResign(true);
 
@@ -87,13 +94,15 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
 }
 
 
-void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string username, string msg){
-    if (cmmd !=2)
+void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string username, char* msg){
+    if (cmmd != 80)
         return ;
     friendsBuffer friendMsg;
     friendMsg.SetFriendsBuffer(msg);
     int cnt = friendMsg.GetAmouts();
-    for (int i= 0;i<cnt;i++)
+    int number =cnt *2;
+
+    for (int i= 0;i<number;i++)
     {
         string buffer = friendMsg.GetOneFriendMsg(i) ;
         FriendsMsg.push_back(buffer);
@@ -101,4 +110,11 @@ void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string usernam
     FriendNumbers += cnt ;
     if(FriendNumbers >= Max)
         toshow->LoadFriendMsg(FriendsMsg);
+}
+
+
+void WeChatControl::ReadIndivideMsg(int cmmd, int Userid, int Targetid, string username, string msg){
+    if (cmmd != 2)
+        return ;
+    toshow->ChatMegFromNetWork(Targetid,msg);
 }

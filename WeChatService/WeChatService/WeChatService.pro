@@ -13,7 +13,10 @@ SOURCES += main.cpp \
     logindb.cpp \
     logincontrol.cpp \
     chatbuffer.cpp \
-    friendsbuffer.cpp
+    friendsbuffer.cpp \
+    elumdata.cpp \
+    usersdatasave.cpp \
+    databasemsg.cpp
 
 HEADERS += \
     wechatservice.h \
@@ -25,6 +28,9 @@ HEADERS += \
     logindb.h \
     logincontrol.h \
     chatbuffer.h \
-    friendsbuffer.h
+    friendsbuffer.h \
+    elumdata.h \
+    usersdatasave.h \
+    databasemsg.h
 
 LIBS +=  -lboost_system -lboost_thread -lmysqlclient -lboost_signals

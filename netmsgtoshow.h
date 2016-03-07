@@ -1,5 +1,6 @@
 class WeChatControl;
 class PersonList;
+class PersonData;
 #ifndef NETMSGTOSHOW_H
 #define NETMSGTOSHOW_H
 #include <boost/smart_ptr.hpp>
@@ -17,13 +18,15 @@ public:
     bool SendMsg(int ReviceId, string mag);
     void LoginShow();
     void LoadFriendMsg(vector<string> Msg);
+    void ChatMegFromNetWork(int TargetId, string Msg);
 signals:
     void StattionFriends(int number);
     void FriendsMsgFeomService(vector<string> Msg);
-
+    void ChatMsgFromNet(int TargetId,string Msg);
 private :
     WeChatControl   *WeCtrol;
     PersonList* ad;
+    PersonData* UserMsg;
 
 };
 

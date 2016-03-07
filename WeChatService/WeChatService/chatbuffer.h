@@ -39,6 +39,7 @@ public:
     void SetTargetId(int targetid);
     void SetName(string name);
     void SetBody(string msg);
+    void SetBodyByChar(char* msg);
     bool CheckNumber(int Anumbers, int sizes);
 
     int GetCmmd();

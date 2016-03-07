@@ -25,7 +25,7 @@ public:
 
     void SetFriendsBuffer(string buffer);
 
-
+    void SetOneFriendsBuffer(int index,string buffer);
     void ShowFriendsMsg();
 private:
 char data_[friendsAmount + max_body_length] ;

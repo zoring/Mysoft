@@ -119,6 +119,16 @@ const char* ChatBuffer::data() const{
     return data_;
 }
 
+char* ChatBuffer::body(){
+    int move =  Cmmd_length + useriD_length +TargetId_length + Name;
+    return data_ +move ;
+}
+
+const char* ChatBuffer::body()const{
+    int move =  Cmmd_length + useriD_length +TargetId_length + Name;
+    return data_ +move ;
+}
+
 int ChatBuffer::GetMsgSize(){
     return Msg_length_;
 }

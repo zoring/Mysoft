@@ -62,6 +62,13 @@ void ChatBuffer::SetBody(string msg){
     memcpy(data_ + move , msg.c_str(), body_length_) ;
 }
 
+void ChatBuffer::SetBodyByChar(char *msg)
+{
+    int move = Cmmd_length +useriD_length + TargetId_length + Name ;
+
+    memcpy(data_ + move , msg, max_body_length) ;
+}
+
 bool ChatBuffer::CheckNumber(int Anumbers, int sizes){
     if( Anumbers < 0)
         return false;

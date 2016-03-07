@@ -10,8 +10,8 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
  dbControl = new DBControl();
  loginControl = new LoginControl();
         WeChatfuntions.push_back( boost::bind(&WeChatService::SightUp ,this,_1,_2,_3,_4,_5,_6));
-
-           WeChatfuntions.push_back( boost::bind(&WeChatService::CheackLogin ,this,_1,_2,_3,_4,_5,_6));
+        WeChatfuntions.push_back( boost::bind(&WeChatService::CheackLogin ,this,_1,_2,_3,_4,_5,_6));
+        WeChatfuntions.push_back( boost::bind(&WeChatService::SendIndiviMsg, this, _1,_2,_3,_4,_5,_6));
 //          WeChatfuntions.push_back(boost::bind(&WeChatService::SerchMsg ,this,_1,_2,_3,_4));
 //          WeChatfuntions.push_back(boost::bind(&WeChatService::SendIndiviMsg ,this,_1,_2,_3,_4));
 //          WeChatfuntions.push_back (boost::bind(&WeChatService::SendGroundMsg ,this,_1,_2,_3,_4) ) ;
@@ -28,7 +28,8 @@ WeChatService::WeChatService(io_service &msg_iosev, io_service &fun_iosev):messa
 
 
 void WeChatService::SightUp(int cmmd,int UserId, int TargetId,string UserName, string Msg, boost::shared_ptr<tcp::socket> psocket){
-
+    if(elumdata.SightInCmmd != cmmd)
+        return ;
    if( loginControl->SightUp(UserName,Msg))
        cout<<"Ok, insert data"<<endl;
    else
@@ -36,15 +37,16 @@ void WeChatService::SightUp(int cmmd,int UserId, int TargetId,string UserName, s
 }
 
 void WeChatService::CheackLogin(int cmmd, int UserId, int TargetId, string UserName,string Msg, boost::shared_ptr<tcp::socket> psocket){
+    if (elumdata.LoginCmmd != cmmd)
+        return ;
     cout<<" WeChatService::CheackLogin" <<endl;
- cout<<UserName<<":"<<Msg<<endl;
-     UserId = loginControl->IsLogin(UserName,Msg) ;
+    cout<<UserName<<":"<<Msg<<endl;
+    UserId = loginControl->IsLogin(UserName,Msg) ;
     cout<<"UserId:"<<UserId<<endl;
     if(UserId)
        { AlwaysUserMap[UserId] = psocket;
-        cout<<"UserId:"<<UserId<<endl;
          SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
-         LoadFriendsMsg(cmmd,UserId,TargetId,UserName,Msg,psocket);
+         LoadFriendsMsg(80,UserId,TargetId,UserName,Msg,psocket);
         }
     else
          SendIndividualMessage(psocket,cmmd,UserId,TargetId,UserName,Msg);
@@ -52,20 +54,38 @@ void WeChatService::CheackLogin(int cmmd, int UserId, int TargetId, string UserN
 
 }
 
+ void WeChatService::SendIndiviMsg(int cmmd,int UserId, int TargetId,string userName,string Msg , boost::shared_ptr<tcp::socket> psocket){
+     if (elumdata.ChatCmmd != cmmd)
+         return;
+     if (AlwaysUserMap.find(UserId) == AlwaysUserMap.end())
+     {
+         return ;
+     }
+     SendIndividualMessage(AlwaysUserMap[UserId],elumdata.ChatCmmd,TargetId,UserId,userName,Msg);
+ }
+
 void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string userName, string Msg, boost::shared_ptr<tcp::socket> psocket){
     cout<<"Hello"<<endl;
     vector<boost::shared_ptr<string> > MsgBuffer = loginControl->LoadUserFriends(UserId);
     friendsBuffer FriendsMsg;
     int max=0;
-    max = MsgBuffer.size();
+    max = MsgBuffer.size() /2;
     Msg = "";
-    for(vector<boost::shared_ptr<string> >::iterator iter= MsgBuffer.begin(); iter != MsgBuffer.end();++iter){
+    int index = 0;
+    for(vector<boost::shared_ptr<string> >::iterator iter= MsgBuffer.begin(); iter != MsgBuffer.end();++iter,++index){
 
-        FriendsMsg.SetFriendsBuffer(*((*iter).get()));
+        FriendsMsg.SetOneFriendsBuffer(index,*((*iter).get()));
         if (FriendsMsg.GetMsgSize() >= 71)
         {
-          FriendsMsg.ShowFriendsMsg();
-          SendIndividualMessage(psocket,2,UserId,max,userName,FriendsMsg.data());
+
+          ChatBuffer sendMsg;
+          sendMsg.SetCmmd(cmmd);
+          sendMsg.SetUserId(UserId);
+          sendMsg.SetTargetId(max);
+          sendMsg.SetName(userName);
+          sendMsg.SetBodyByChar(FriendsMsg.data());
+          psocket->async_write_some(buffer(string(sendMsg.data(),1024)),boost::bind(&WeChatService::SendHandle,this,_1));
+
           FriendsMsg.ResetBuffer();
 
         }
@@ -73,8 +93,13 @@ void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string us
     }
     if (FriendsMsg.GetMsgSize())
     {
-         FriendsMsg.ShowFriendsMsg();
-        SendIndividualMessage(psocket,2,UserId,max,userName,FriendsMsg.data());
+        ChatBuffer sendMsg;
+        sendMsg.SetCmmd(cmmd);
+        sendMsg.SetUserId(UserId);
+        sendMsg.SetTargetId(max);
+        sendMsg.SetName(userName);
+        sendMsg.SetBodyByChar(FriendsMsg.data());
+        psocket->async_write_some(buffer(string(sendMsg.data(),1024)),boost::bind(&WeChatService::SendHandle,this,_1));
         FriendsMsg.ResetBuffer();
 
     }
@@ -131,9 +156,7 @@ void WeChatService::HandleRead(boost::shared_ptr<tcp::socket> psocket,char Messa
         return;
     //读数据处理
    ChatBuffer Msg;
-    Msg.ShowTheMsg();
    Msg.SetChatBuffer(MessageBuffers,bytes);
-   Msg.ShowTheMsg();
    int cmmd = Msg.GetCmmd();
    int userId = Msg.GetUserId();
    int ToOtherId =  Msg.GetTargetId();
@@ -164,10 +187,13 @@ void WeChatService::SendIndividualMessage(boost::shared_ptr<tcp::socket> ReadSoc
     sendMsg.SetTargetId(Targetid);
     sendMsg.SetName(username);
     sendMsg.SetBody(msg);
-    cout<<cmmd<<endl;
+    cout<<"Now:"<<msg<<endl;
     ReadSocket->async_write_some(buffer(string(sendMsg.data(),1024)),boost::bind(&WeChatService::SendHandle,this,_1));
     
 }
+
+
+
 
 void WeChatService::SendHandle(const boost::system::error_code &ec){
     if (ec)

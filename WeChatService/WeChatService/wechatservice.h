@@ -11,6 +11,7 @@
 #include "dbcontrol.h"
 #include "logincontrol.h"
 #include <boost/function.hpp>
+#include "elumdata.h"
 using namespace boost::asio;
 using boost::system::error_code;
 using namespace std;
@@ -32,6 +33,7 @@ public:
     //私人聊天信息读取和转发
     void ReadIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket, boost::system::error_code ec);
     void SendIndividualMessage(boost::shared_ptr<tcp::socket> ReadSocket,int cmmd,int Userid,int Targetid,string username,string msg);
+
     //组信息读取和转发
     void ReanGroundMessage(Tcp_Socket_ptr ReadSocket, error_code ec);
     void SendGroundMessage();
@@ -83,6 +85,7 @@ private:
      LoginControl* loginControl;
      int  AllCmd;
      vector< boost::function<void (int ,int , int , string, string, boost::shared_ptr<tcp::socket>)> > WeChatfuntions;
+     ElumData elumdata;
 
 };
 

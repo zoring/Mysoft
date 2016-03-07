@@ -33,13 +33,11 @@ void friendsBuffer::SetFriendAmout(int Amout){
     memcpy(data_, str.c_str(), str.size());
 }
 
-void friendsBuffer::SetFriendsBuffer(string buffer){
-    if ( buffer.size() > max_body_length)
-        return ;
+void friendsBuffer::SetFriendsBuffer(char* buffer){
 
-     memcpy(data_ + friendsAmount + body_length_*one_msg, buffer.c_str(), buffer.size());
-      body_length_++;
-      SetFriendAmout(body_length_);
+
+     memcpy(data_  , buffer, max_body_length+ friendsAmount);
+
 }
 
 int friendsBuffer::GetAmouts(){
@@ -58,9 +56,22 @@ string friendsBuffer::GetFriendsBuffer(){
 
 
 string friendsBuffer::GetOneFriendMsg(int index){
-    char friendMsg[15] = "";
-    int move = friendsAmount +index*14;
-    strncat(friendMsg,data_+move,14);
+    int move = 0;
+    int length = 0;
+    if (!(index %2))
+     {move = friendsAmount +(index/2)*14 ;
+        length = 4;
+
+    }
+    else
+       {move = friendsAmount + (index/2)*14 + 4;
+        length = 10 ;
+
+    }
+
+
+    char friendMsg[11] = "";
+    strncat(friendMsg,data_+move,length);
     return string(friendMsg);
 }
 

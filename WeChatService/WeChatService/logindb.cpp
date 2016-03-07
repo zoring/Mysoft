@@ -12,13 +12,14 @@ int LoginDB::IsLogin(string name,string PasswordValue){
       MYSQL_ROW row;
     if (mysql_query(Coon.get(), Msg.data()))
         {
-
+            cout<<"wrong "<<endl;
             return 0;
         }
     res = mysql_use_result(Coon.get());
 
     if ((row = mysql_fetch_row(res)) == NULL)
-    {    mysql_free_result(res);
+    {   cout<< "Not Result in user"<<endl;
+        mysql_free_result(res);
         return 0;
     }
 
@@ -30,7 +31,7 @@ int LoginDB::IsLogin(string name,string PasswordValue){
 
 bool LoginDB::CanSigUP(string username){
      string Msg = " select * from user where username = '" + username + "'" ;
-     cout<<Msg<<endl;
+
      if (mysql_query(Coon.get(), Msg.data()))
          {
 
@@ -75,14 +76,15 @@ vector<boost::shared_ptr<string> > LoginDB::LoadUserFriends(int UserId){
 
 
     while ((row = mysql_fetch_row(res)) != NULL)
-    {	boost::shared_ptr<string> buffer(new string(""));
+    {
          for (int i = 0; i< mysql_num_fields(res);i++)
          {
-            *(buffer.get()) += row[i];
-
+             boost::shared_ptr<string> buffer(new string(""));
+            *(buffer.get()) = row[i];
+             friendsBuffer.push_back(buffer);
 
          }
-         friendsBuffer.push_back(buffer);
+
     }
 
     mysql_free_result(res);

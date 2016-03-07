@@ -17,12 +17,16 @@ public:
     explicit PersonList(NetMsgToShow *NetToshow,QListWidget *parent = 0);
     bool StaticMainWindow();
     bool AddGround(std::string GroundName); //增加组
+
     //bool DelGround(PersonGroundItem Grounds);//删除组
 public slots:
     void GetMsg(int number);
     void GetFriendsMsg(vector<string> Msg);
+     void ReviceMegFromNet(int userId, string Meg);
 private:
     int UserId;
+     map<int, ChatDialog*>  FriendChatMap;
+     map<int,PersonGroundItem*>    FriendsData;
     std::list<PersonGroundItem> Grouds;   // 组容器
     bool StaticList( vector<string> FriensMsg);
     bool StaticGround(std::string keys);

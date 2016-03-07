@@ -1,10 +1,10 @@
 class NetMsgToShow;
-
+class PersonGroundItem;
 #ifndef CHATDIALOG_H
 #define CHATDIALOG_H
 #include <QDialog>
 #include <string>
-
+#include <map>
 namespace Ui {
 class ChatDialog;
 }
@@ -16,14 +16,16 @@ class ChatDialog : public QDialog
 signals:
     void dlgReturn(QString);
 public:
-    explicit ChatDialog(NetMsgToShow* sendObj, QWidget *parent = 0);
+    explicit ChatDialog(NetMsgToShow* sendObj,PersonGroundItem* persondata, QWidget *parent = 0);
     ~ChatDialog();
 
-     void UpdateMessage(string msg);
+     void UpdateMessage();
 
 private:
     Ui::ChatDialog *ui;
     NetMsgToShow *SendToNetObj;
+    PersonGroundItem* persondata;
+
 private slots:
     void SendMessage();
 
