@@ -20,6 +20,7 @@ public:
     bool CheckUser(const string userID, const string Password);
     bool ResightUser(const string userName, const string Password);
     void ReadMsgFromNet(int cmmd,int Userid,int Targetid,string username,string msg );
+    string GetUserName();
     void PushBackFuntions();
    signals:
     void CheckResultFromService(bool result);

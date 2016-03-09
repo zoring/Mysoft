@@ -15,14 +15,16 @@ class NetMsgToShow : public QObject
 public:
     NetMsgToShow(WeChatControl *WeCtrol);
     void ReviceMsg(int PersonId,string msg);
-    bool SendMsg(int ReviceId, string mag);
+    bool SendMsg(const int ReviceId, const string msg);
     void LoginShow();
     void LoadFriendMsg(vector<string> Msg);
-    void ChatMegFromNetWork(int TargetId, string Msg);
+    string GetUserName();
+    void ChatMegFromNetWork(int TargetId, string Msg,string UserName);
 signals:
+    void ChatMsgFromNet(int TargetId,string Msg,string UserName);
     void StattionFriends(int number);
     void FriendsMsgFeomService(vector<string> Msg);
-    void ChatMsgFromNet(int TargetId,string Msg);
+
 private :
     WeChatControl   *WeCtrol;
     PersonList* ad;

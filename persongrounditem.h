@@ -17,6 +17,7 @@ class ChatDialog;
 
 #include <QListWidget>
 #include <list>
+#include <vector>
 #include "person.h"
 #include "QLabel"
 using namespace std;
@@ -33,13 +34,14 @@ public:
     list<Person>& getPersonList();
     int getgroundId() const;
     bool eventFilter(QObject *obj, QEvent *event);//事件过滤器
-    void PushBackNotReadMsg(string);
+    void PushBackNotReadMsg(string Msg, string UserName);
     vector<string>& PopNotReadMsg();
     const int GetUserId();
     protected:
     void mouseDoubleClickEvent (QMouseEvent *event);
 
 private:
+     vector<string> NotReadMsg;
     const int UserId;
     std::list<Person> personlist;
      map<int, ChatDialog*>  &FriendChatMap;
@@ -48,7 +50,7 @@ private:
     QWidget *PersonImage;//用户头像
     string ImageUrl;
     NetMsgToShow *NetToShow;
-    vector<string> NotReadMsg;
+
 GetSetNameOfProperty (std::string, IPAddress, private)
 GetSetNameOfProperty (std::string, GroundName, private)
 GetSetNameOfProperty (std::string, ImageUrl, private)

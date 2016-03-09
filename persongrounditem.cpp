@@ -19,6 +19,7 @@ PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const cha
 {
 
 
+
     this->UserName = new QLabel(this);
     this->SiginWord = new QLabel(this);
   QString QUesrName(UesrName);
@@ -40,6 +41,7 @@ PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const cha
 
   PersonImage->installEventFilter(this);
 
+
 }
 
 void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
@@ -49,6 +51,7 @@ void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
          test->show();
          FriendChatMap[UserId] = test;
           test->activateWindow();
+          test->UpdateMessage();
         }
         else
         {
@@ -97,8 +100,14 @@ bool PersonGroundItem::operator ==(const PersonGroundItem& other){
 }
 
 
-void PersonGroundItem::PushBackNotReadMsg(string Msg){
-    NotReadMsg.push_back(Msg);
+void PersonGroundItem::PushBackNotReadMsg(string Msg,string UserName){
+  UserName = UserName + ":\n";
+  Msg = UserName +Msg ;
+  if (Msg[Msg.size() - 1] != '\n')
+      Msg += "\n";
+   this->NotReadMsg.push_back(Msg);
+     if (FriendChatMap.find(UserId) != FriendChatMap.end())
+         FriendChatMap[UserId]->UpdateMessage();
 }
 
 

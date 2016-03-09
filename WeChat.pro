@@ -23,8 +23,8 @@ SOURCES += main.cpp\
     chatdialog.cpp \
     wechatconnet.cpp \
     wechatcontrol.cpp \
-    netmsgtoshow.cpp \
     chatbuffer.cpp \
+    netmsgtoshow.cpp \
     friendsbuffer.cpp
 
 HEADERS  += mainwindow.h \

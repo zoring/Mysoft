@@ -25,7 +25,8 @@ private:
     Ui::ChatDialog *ui;
     NetMsgToShow *SendToNetObj;
     PersonGroundItem* persondata;
-
+    void AfterAword();
+    void WhoSay(string Name);
 private slots:
     void SendMessage();
 

@@ -37,6 +37,12 @@ void NetMsgToShow::LoadFriendMsg(vector<string> Msg){
 
 }
 
-void NetMsgToShow::ChatMegFromNetWork(int TargetId, string Msg){
-    emit NetMsgToShow::ChatMsgFromNet(TargetId,Msg);
+void NetMsgToShow::ChatMegFromNetWork(int TargetId, string Msg , string UserName){
+    emit ChatMsgFromNet(TargetId,Msg, UserName);
+
+}
+
+
+string NetMsgToShow::GetUserName(){
+    return WeCtrol->GetUserName();
 }

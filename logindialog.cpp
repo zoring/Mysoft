@@ -43,7 +43,6 @@ void LoginDialog::on_LoginButton_clicked()
 }
 
 void LoginDialog::AllowLogin(bool IsOk){
-    cout<<"LoginDialog::AllowLogin"<< IsOk<<endl;
     if (IsOk)
     {
         IsLogin = true;

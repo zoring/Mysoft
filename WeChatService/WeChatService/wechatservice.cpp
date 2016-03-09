@@ -57,11 +57,13 @@ void WeChatService::CheackLogin(int cmmd, int UserId, int TargetId, string UserN
  void WeChatService::SendIndiviMsg(int cmmd,int UserId, int TargetId,string userName,string Msg , boost::shared_ptr<tcp::socket> psocket){
      if (elumdata.ChatCmmd != cmmd)
          return;
-     if (AlwaysUserMap.find(UserId) == AlwaysUserMap.end())
+     cout<<UserId<<"::"<<TargetId<<endl;
+     if (AlwaysUserMap.find(TargetId) == AlwaysUserMap.end())
      {
          return ;
      }
-     SendIndividualMessage(AlwaysUserMap[UserId],elumdata.ChatCmmd,TargetId,UserId,userName,Msg);
+     else
+     SendIndividualMessage(AlwaysUserMap[TargetId],elumdata.ChatCmmd,UserId,TargetId,userName,Msg);
  }
 
 void WeChatService::LoadFriendsMsg(int cmmd, int UserId, int TargetId, string userName, string Msg, boost::shared_ptr<tcp::socket> psocket){

@@ -24,6 +24,8 @@ void WeChatControl::SendMsgToNet( int cmmd,int Userid,int Targetid,string userna
    if (cmmd >99 || Userid >=10000 || Targetid >=10000|| username.size() >=10 || msg.size() >= 1004)
        return ;
    Userid = UserMsg->getUserId();
+   if (UserMsg->getUserName() != "")
+   username = UserMsg->getUserName();
    sendMsg.SetCmmd(cmmd);
    sendMsg.SetUserId(Userid);
    sendMsg.SetTargetId(Targetid);
@@ -76,6 +78,8 @@ void WeChatControl::ReadMsgFromNet(int cmmd, int Userid, int Targetid, string us
 void WeChatControl::ReadCheckUser(int cmmd, int Userid, int Targetid, string username, string msg){
     if (cmmd != 1)
         return ;
+    UserMsg->setUserId(Userid);
+    UserMsg->setUserName(username);
    emit CheckResultFromService(Userid);
 }
 
@@ -83,8 +87,7 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
 
     if (cmmd != 0)
         return ;
-    UserMsg->setUserId(Userid);
-    UserMsg->setUserName(username);
+
     if (Targetid)
        { dlg->AllowResign(true);
 
@@ -116,5 +119,10 @@ void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string usernam
 void WeChatControl::ReadIndivideMsg(int cmmd, int Userid, int Targetid, string username, string msg){
     if (cmmd != 2)
         return ;
-    toshow->ChatMegFromNetWork(Targetid,msg);
+    toshow->ChatMegFromNetWork(Userid,msg,username);
+}
+
+
+string WeChatControl::GetUserName(){
+    return UserMsg->getUserName();
 }

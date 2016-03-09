@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
       qRegisterMetaType<vector<string> >("vector<string>");
+        qRegisterMetaType<string>("string");
         QTextCodec::setCodecForLocale(QTextCodec::codecForLocale());//设置编码
         WeChatControl* adf = new WeChatControl();
          return a.exec();

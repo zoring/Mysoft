@@ -17,7 +17,7 @@ PersonList::PersonList(NetMsgToShow *NetToshow,QListWidget *parent) : QListWidge
 
 connect(this->NetToshow,&NetMsgToShow::StattionFriends,this,&PersonList::GetMsg );
 connect(this->NetToshow,&NetMsgToShow::FriendsMsgFeomService,this,&PersonList::GetFriendsMsg);
-connect(this->NetToshow,&NetMsgToShow::ChatMegFromNetWork,this,&PersonList::ReviceMegFromNet);
+connect(this->NetToshow,&NetMsgToShow::ChatMsgFromNet,this,&PersonList::ReviceMegFromNet);
 }
 
 //初始化聊天界面
@@ -34,7 +34,7 @@ Hlayout->addWidget(GroundButton);
 //StaticList(StaticLists);
  layout->addItem(Hlayout);
  layout->addItem(StaticLists);
-//this->setLayout(layout);
+  this->setLayout(layout);
 this->show();
 
  return true ;
@@ -107,6 +107,8 @@ void PersonList::GetFriendsMsg(vector<string> Msg){
 }
 
 
-void PersonList::ReviceMegFromNet(int userId, string Meg){
-    FriendsData[userId]->PushBackNotReadMsg(Meg);
+void PersonList::ReviceMegFromNet(int userId, string Meg,string UserName){
+   if(FriendsData.find(userId) != FriendsData.end())
+    FriendsData[userId]->PushBackNotReadMsg(Meg, UserName);
+
 }

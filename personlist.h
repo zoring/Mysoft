@@ -22,7 +22,7 @@ public:
 public slots:
     void GetMsg(int number);
     void GetFriendsMsg(vector<string> Msg);
-     void ReviceMegFromNet(int userId, string Meg);
+     void ReviceMegFromNet(int TargetId,string Msg,string UserName);
 private:
     int UserId;
      map<int, ChatDialog*>  FriendChatMap;
