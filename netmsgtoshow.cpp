@@ -32,8 +32,8 @@ int k=9;
 }
 
 
-void NetMsgToShow::LoadFriendMsg(vector<string> Msg){
-    emit FriendsMsgFeomService( Msg);
+void NetMsgToShow::LoadFriendMsg(int GroundId,vector<string> Msg){
+    emit FriendsMsgFormService( GroundId,Msg);
 
 }
 
@@ -45,4 +45,9 @@ void NetMsgToShow::ChatMegFromNetWork(int TargetId, string Msg , string UserName
 
 string NetMsgToShow::GetUserName(){
     return WeCtrol->GetUserName();
+}
+
+
+void NetMsgToShow::LoadGroundsMsg(vector<string> Msg){
+    emit GroundsMsgFormService(Msg);
 }

@@ -16,7 +16,12 @@ SOURCES += main.cpp \
     friendsbuffer.cpp \
     elumdata.cpp \
     usersdatasave.cpp \
-    databasemsg.cpp
+    databasemsg.cpp \
+    groundservice.cpp \
+    serchservice.cpp \
+    updateservice.cpp \
+    inserservice.cpp \
+    deleteservice.cpp
 
 HEADERS += \
     wechatservice.h \
@@ -31,6 +36,11 @@ HEADERS += \
     friendsbuffer.h \
     elumdata.h \
     usersdatasave.h \
-    databasemsg.h
+    databasemsg.h \
+    groundservice.h \
+    serchservice.h \
+    updateservice.h \
+    inserservice.h \
+    deleteservice.h
 
 LIBS +=  -lboost_system -lboost_thread -lmysqlclient -lboost_signals

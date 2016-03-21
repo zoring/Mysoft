@@ -52,7 +52,8 @@ public:
 
 
 private:
-        void LoadFriendsMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+        void LoadGroundMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
+        void LoadFriendsMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0,int groundid=0);
         void SightUp(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
          void CheackLogin(int cmmd,int UserId = 0, int TargetId= 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
          void SerchMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);

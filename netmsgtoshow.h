@@ -17,14 +17,15 @@ public:
     void ReviceMsg(int PersonId,string msg);
     bool SendMsg(const int ReviceId, const string msg);
     void LoginShow();
-    void LoadFriendMsg(vector<string> Msg);
+    void LoadFriendMsg(int GroundId,vector<string> Msg);
     string GetUserName();
     void ChatMegFromNetWork(int TargetId, string Msg,string UserName);
+    void LoadGroundsMsg(vector<string> Msg);
 signals:
     void ChatMsgFromNet(int TargetId,string Msg,string UserName);
     void StattionFriends(int number);
-    void FriendsMsgFeomService(vector<string> Msg);
-
+    void FriendsMsgFormService(int GroundId,vector<string> Msg);
+    void GroundsMsgFormService(vector<string> Msg);
 private :
     WeChatControl   *WeCtrol;
     PersonList* ad;

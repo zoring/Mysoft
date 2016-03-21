@@ -9,7 +9,7 @@
 using namespace std;
 WeChatControl::WeChatControl()
 {
-    FriendNumbers = 0;
+
     NetWorkConnet = new WeChatConnet(this);
     dlg= new LoginDialog(this);
     dlg->show();
@@ -97,22 +97,38 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
 }
 
 
-void WeChatControl::ReadFriendsMsg(int cmmd, int Userid, int Max, string username, char* msg){
-    if (cmmd != 80)
+void WeChatControl::ReadFriendsMsg(int cmmd, int GroundId, int Max, string username, char* msg){
+    if (cmmd == 80 )
+    {
+        ReadGroundMsg(cmmd,GroundId,Max,username,msg);
         return ;
+    }
+    else if(cmmd != 81)
+        return;
     friendsBuffer friendMsg;
     friendMsg.SetFriendsBuffer(msg);
     int cnt = friendMsg.GetAmouts();
     int number =cnt *2;
+    if (groundMapFriend.find(GroundId) == groundMapFriend.end())
+    { vector<string> FriendsMsg;
 
+        groundMapFriend[GroundId] = FriendsMsg;
+    }
     for (int i= 0;i<number;i++)
     {
         string buffer = friendMsg.GetOneFriendMsg(i) ;
-        FriendsMsg.push_back(buffer);
+        groundMapFriend[GroundId].push_back(buffer);
     }
-    FriendNumbers += cnt ;
-    if(FriendNumbers >= Max)
-        toshow->LoadFriendMsg(FriendsMsg);
+
+    if(groundMapFriend[GroundId].size() >= Max)
+       {if(HasReadGrounds.find(GroundId) != HasReadGrounds.end())
+        {
+
+        toshow->LoadFriendMsg(GroundId,groundMapFriend[GroundId]);
+        }
+        else
+            HasReadGrounds.insert(GroundId);
+    }
 }
 
 
@@ -125,4 +141,38 @@ void WeChatControl::ReadIndivideMsg(int cmmd, int Userid, int Targetid, string u
 
 string WeChatControl::GetUserName(){
     return UserMsg->getUserName();
+}
+
+
+void WeChatControl::ReadGroundMsg(int cmmd, int Userid, int Max, string username, char *msg){
+    friendsBuffer friendMsg;
+    friendMsg.SetFriendsBuffer(msg);
+    int cnt = friendMsg.GetAmouts();
+    int number =cnt *2;
+
+    for (int i= 0;i<number;i++)
+    {
+        string buffer = friendMsg.GetOneFriendMsg(i) ;
+        FriendsGroundMsg.push_back(buffer);
+    }
+    FriendGroundsNumbers += cnt ;
+    if(FriendGroundsNumbers >= Max)
+    {
+        toshow->LoadGroundsMsg(FriendsGroundMsg);
+        for (int i= 0;i<number;i++)
+        {
+            if(!(i%2))
+            {int GroundId = atoi(friendMsg.GetOneFriendMsg(i).c_str());
+                if(HasReadGrounds.find(GroundId) != HasReadGrounds.end())
+                {
+                   if(groundMapFriend.find(GroundId) != groundMapFriend.end())
+                    toshow->LoadFriendMsg(GroundId,groundMapFriend[GroundId]);
+                   else
+                       cout<<"Key False, GroundId  not in groundMapFriend"<<endl;
+                }
+                else
+                    HasReadGrounds.insert(GroundId);
+            }
+        }
+    }
 }

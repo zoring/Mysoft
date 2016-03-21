@@ -8,7 +8,7 @@ class PersonData;
 #include <QObject>
 #include <boost/function.hpp>
 #include <vector>
-
+#include <set>
 class WeChatControl  : public QObject
 {
     Q_OBJECT
@@ -29,9 +29,11 @@ private:
     WeChatConnet *NetWorkConnet;
     NetMsgToShow  *toshow;
     LoginDialog* dlg;
-    vector<string>  FriendsMsg;
+    vector<string>  FriendsGroundMsg;
     PersonData* UserMsg;
-    int FriendNumbers;
+    set<int> HasReadGrounds;
+    map<int,vector<string> > groundMapFriend;
+    int FriendGroundsNumbers;
     void ReadIndivideMsg(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadResightUser(int cmmd,int Userid,int Targetid,string username,string msg);
     void ReadCheckUser(int cmmd,int Userid,int Targetid,string username,string msg);
@@ -39,7 +41,7 @@ private:
     void ReadFuntionMsg(int cmmd,int Userid,int Targetid,string username,string msg);
 
     vector< boost::function<void (int ,int , int , string, string)> > ReadControlFuntions;
-
+     void ReadGroundMsg(int cmmd,int Userid,int Targetid,string username,char* msg);
 
 };
 

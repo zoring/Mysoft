@@ -10,7 +10,8 @@ public:
     LoginControl();
     int IsLogin(string userName, string Password);
     bool SightUp(string UserName, string Password);
-    vector<boost::shared_ptr<string> > LoadUserFriends(int UserId);
+    vector<boost::shared_ptr<string> > LoadUserFriends(int UserId,int groundsid);
+    vector<boost::shared_ptr<string> > LoadGroundMsg(int UserId);
 private:
 
      ConnetDB* conn;

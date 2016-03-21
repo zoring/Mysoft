@@ -61,7 +61,7 @@ bool WeChatConnet::ReadIndividualMsg(char MessageBuffers[], const boost::system:
     string msg =Msg.GetBody();
     string Name = Msg.GetName();
     delete MessageBuffers;
-    if (cmmd!=80)
+    if (cmmd!=80 and cmmd!= 81)
     Control->ReadMsgFromNet(cmmd,userId,ToOtherId,Name,msg);
     else
        Control->ReadFriendsMsg(cmmd,userId,ToOtherId,Name,Msg.body());

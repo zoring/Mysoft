@@ -9,7 +9,9 @@ public:
     LoginDB(MYSQL* coon);
     int IsLogin(string idValue,string PasswordValue);
     bool SightUP(string username, string PasswordValue);
-    vector<boost::shared_ptr<string> > LoadUserFriends(int UserId);
+    vector<boost::shared_ptr<string> > LoadUserFriends(int UserId,int groundsid);
+    vector<boost::shared_ptr<string> > LoadGroundMsg(int UserId);
+
 private :
     bool CanSigUP(string username);
 };

@@ -60,11 +60,11 @@ bool LoginDB::SightUP(string Username, string PasswirdValue){
 }
 
 
-vector<boost::shared_ptr<string> > LoginDB::LoadUserFriends(int UserId){
+vector<boost::shared_ptr<string> > LoginDB::LoadUserFriends(int UserId,int groundsid){
       vector< boost::shared_ptr<string> > friendsBuffer;
 
-    string Msg = " select user.userid, user.username from user, friends where friends.userid = " + IntToString(UserId) ;
-    Msg += " and  friends.friendid = user.userid";
+      string Msg = " select user.userid, user.username from user, friends where friends.userid = " + IntToString(UserId) ;
+      Msg += " and  friends.friendid = user.userid and groundsid = " + IntToString(groundsid);
     if (mysql_query(Coon.get(), Msg.data()))
         {
 
@@ -89,4 +89,35 @@ vector<boost::shared_ptr<string> > LoginDB::LoadUserFriends(int UserId){
 
     mysql_free_result(res);
     return friendsBuffer;
+}
+
+
+vector<boost::shared_ptr<string> > LoginDB::LoadGroundMsg(int UserId){
+    vector< boost::shared_ptr<string> > GroundBuffer;
+ string Msg = "select groundsid, groundsname from grounds where userid = " + IntToString(UserId) ;
+
+  if (mysql_query(Coon.get(), Msg.data()))
+      {
+
+          return GroundBuffer ;
+      }
+  MYSQL_RES *res;
+  MYSQL_ROW row;
+  res = mysql_use_result(Coon.get());
+
+
+  while ((row = mysql_fetch_row(res)) != NULL)
+  {
+       for (int i = 0; i< mysql_num_fields(res);i++)
+       {
+           boost::shared_ptr<string> buffer(new string(""));
+          *(buffer.get()) = row[i];
+           GroundBuffer.push_back(buffer);
+
+       }
+
+  }
+
+  mysql_free_result(res);
+  return GroundBuffer;
 }
