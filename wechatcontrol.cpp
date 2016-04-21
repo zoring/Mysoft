@@ -6,6 +6,7 @@
 #include "chatbuffer.h"
 #include "persondata.h"
 #include "friendsbuffer.h"
+
 using namespace std;
 WeChatControl::WeChatControl()
 {
@@ -15,6 +16,7 @@ WeChatControl::WeChatControl()
     dlg->show();
     toshow = new NetMsgToShow(this);
     UserMsg = new PersonData();
+    PushBackFunByChar();
     //toshow = new NetMsgToShow(this);
 }
 
@@ -42,6 +44,8 @@ void WeChatControl::PushBackFuntions(){
     ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadResightUser ,this,_1,_2,_3,_4,_5));
     ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadCheckUser ,this,_1,_2,_3,_4,_5));
     ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadIndivideMsg ,this,_1,_2,_3,_4,_5));
+    ReadControlFuntions.push_back(boost::bind(&WeChatControl::ReadAddGround ,this,_1,_2,_3,_4,_5));
+
 }
 
 bool WeChatControl::IsConnet(){
@@ -98,12 +102,8 @@ void WeChatControl::ReadResightUser(int cmmd, int Userid, int Targetid, string u
 
 
 void WeChatControl::ReadFriendsMsg(int cmmd, int GroundId, int Max, string username, char* msg){
-    if (cmmd == 80 )
-    {
-        ReadGroundMsg(cmmd,GroundId,Max,username,msg);
-        return ;
-    }
-    else if(cmmd != 81)
+
+     if(cmmd != 81)
         return;
     friendsBuffer friendMsg;
     friendMsg.SetFriendsBuffer(msg);
@@ -145,6 +145,11 @@ string WeChatControl::GetUserName(){
 
 
 void WeChatControl::ReadGroundMsg(int cmmd, int Userid, int Max, string username, char *msg){
+    if (cmmd != 80 )
+    {
+
+        return ;
+    }
     friendsBuffer friendMsg;
     friendMsg.SetFriendsBuffer(msg);
     int cnt = friendMsg.GetAmouts();
@@ -175,4 +180,45 @@ void WeChatControl::ReadGroundMsg(int cmmd, int Userid, int Max, string username
             }
         }
     }
+}
+
+
+void WeChatControl::ReadAddGround(int cmmd, int Userid, int Targetid, string username, string msg){
+    if (cmmd != elumdata.AddGroundCmmd)
+        return ;
+    toshow->GetNewGroundName(Targetid,msg);
+}
+
+
+void WeChatControl::ReadFoundFriendResult(int cmmd, int Userid, int Targetid, string username, char *msg){
+    friendsBuffer friendMsg;
+    friendMsg.SetFriendsBuffer(msg);
+    int cnt = friendMsg.GetAmouts();
+    int number =cnt *2;
+
+    for (int i= 0;i<number;i++)
+    {
+        string buffer = friendMsg.GetOneFriendMsg(i) ;
+        FoundFriends.push_back(buffer);
+    }
+    if (FoundFriends.size() >= Targetid)
+    {
+
+    }
+}
+
+
+
+void WeChatControl::ReadMsgFromNetByChar(int cmmd, int Userid, int Targetid, string username, char *msg){
+    if (readFunFromNet.find(cmmd) == readFunFromNet.end())
+        return ;
+    readFunFromNet[cmmd](cmmd,Userid,Targetid,username,msg);
+}
+
+
+
+void WeChatControl::PushBackFunByChar(){
+
+    readFunFromNet[81] = boost::bind(&WeChatControl::ReadFriendsMsg ,this,_1,_2,_3,_4,_5);
+    readFunFromNet[80] = boost::bind(&WeChatControl::ReadGroundMsg ,this,_1,_2,_3,_4,_5);
 }

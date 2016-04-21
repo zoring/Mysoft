@@ -14,6 +14,8 @@ public:
     bool DeleteMsg(string Tab,string key,string value,string other);
     bool UpDateMsg(string Tab,string key,string value,string other);
     string IntToString(int number);
+    bool IsExit(string Tab,string key,string value);
+    vector<string> ReturnGroundBySqlstring(string sqlstatement);
 protected:
     boost::shared_ptr<MYSQL> Coon;
 private:

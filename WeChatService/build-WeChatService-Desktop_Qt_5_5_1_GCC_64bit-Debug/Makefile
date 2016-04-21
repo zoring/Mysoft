@@ -66,7 +66,8 @@ SOURCES       = ../WeChatService/main.cpp \
 		../WeChatService/serchservice.cpp \
 		../WeChatService/updateservice.cpp \
 		../WeChatService/inserservice.cpp \
-		../WeChatService/deleteservice.cpp 
+		../WeChatService/deleteservice.cpp \
+		../WeChatService/userdbservice.cpp 
 OBJECTS       = main.o \
 		wechatservice.o \
 		userservice.o \
@@ -85,7 +86,8 @@ OBJECTS       = main.o \
 		serchservice.o \
 		updateservice.o \
 		inserservice.o \
-		deleteservice.o
+		deleteservice.o \
+		userdbservice.o
 DIST          = ../../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/unix.conf \
 		../../../../Qt5.5.1/5.5/gcc_64/mkspecs/common/linux.conf \
@@ -232,7 +234,8 @@ DIST          = ../../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		serchservice.h \
 		updateservice.h \
 		inserservice.h \
-		deleteservice.h ../WeChatService/main.cpp \
+		deleteservice.h \
+		userdbservice.h ../WeChatService/main.cpp \
 		../WeChatService/wechatservice.cpp \
 		../WeChatService/userservice.cpp \
 		../WeChatService/userdb.cpp \
@@ -250,7 +253,8 @@ DIST          = ../../../../Qt5.5.1/5.5/gcc_64/mkspecs/features/spec_pre.prf \
 		../WeChatService/serchservice.cpp \
 		../WeChatService/updateservice.cpp \
 		../WeChatService/inserservice.cpp \
-		../WeChatService/deleteservice.cpp
+		../WeChatService/deleteservice.cpp \
+		../WeChatService/userdbservice.cpp
 QMAKE_TARGET  = WeChatService
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = WeChatService
@@ -588,6 +592,7 @@ main.o: ../WeChatService/main.cpp ../WeChatService/wechatservice.h \
 		../WeChatService/logincontrol.h \
 		../WeChatService/logindb.h \
 		../WeChatService/basedb.h \
+		../WeChatService/userservice.h \
 		../WeChatService/elumdata.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../WeChatService/main.cpp
 
@@ -597,12 +602,22 @@ wechatservice.o: ../WeChatService/wechatservice.cpp ../WeChatService/wechatservi
 		../WeChatService/logincontrol.h \
 		../WeChatService/logindb.h \
 		../WeChatService/basedb.h \
+		../WeChatService/userservice.h \
 		../WeChatService/elumdata.h \
 		../WeChatService/chatbuffer.h \
 		../WeChatService/friendsbuffer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o wechatservice.o ../WeChatService/wechatservice.cpp
 
-userservice.o: ../WeChatService/userservice.cpp ../WeChatService/userservice.h
+userservice.o: ../WeChatService/userservice.cpp ../WeChatService/userservice.h \
+		../WeChatService/logincontrol.h \
+		../WeChatService/connetdb.h \
+		../WeChatService/logindb.h \
+		../WeChatService/basedb.h \
+		../WeChatService/elumdata.h \
+		../WeChatService/wechatservice.h \
+		../WeChatService/dbcontrol.h \
+		../WeChatService/chatbuffer.h \
+		../WeChatService/friendsbuffer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userservice.o ../WeChatService/userservice.cpp
 
 userdb.o: ../WeChatService/userdb.cpp ../WeChatService/userdb.h \
@@ -659,6 +674,13 @@ inserservice.o: ../WeChatService/inserservice.cpp ../WeChatService/inserservice.
 
 deleteservice.o: ../WeChatService/deleteservice.cpp ../WeChatService/deleteservice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o deleteservice.o ../WeChatService/deleteservice.cpp
+
+userdbservice.o: ../WeChatService/userdbservice.cpp ../WeChatService/userdbservice.h \
+		../WeChatService/userdb.h \
+		../WeChatService/databasemsg.h \
+		../WeChatService/basedb.h \
+		../WeChatService/connetdb.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o userdbservice.o ../WeChatService/userdbservice.cpp
 
 ####### Install
 

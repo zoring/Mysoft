@@ -13,6 +13,7 @@
 #include "netmsgtoshow.h"
 #include "chatdialog.h"
 #include <QLineEdit>
+#include <QPalette>
 #include <QMouseEvent>
 PersonList::PersonList(NetMsgToShow *NetToshow,QWidget *parent) : QWidget(parent),NetToshow(NetToshow)
 {
@@ -21,6 +22,12 @@ connect(this->NetToshow,&NetMsgToShow::StattionFriends,this,&PersonList::GetMsg 
 connect(this->NetToshow,&NetMsgToShow::FriendsMsgFormService,this,&PersonList::GetFriendsMsg);
 connect(this->NetToshow,&NetMsgToShow::ChatMsgFromNet,this,&PersonList::ReviceMegFromNet);
 connect(this->NetToshow,&NetMsgToShow::GroundsMsgFormService,this,&PersonList::GetGroundMsg);
+connect(this->NetToshow,&NetMsgToShow::GroundRename,this,&PersonList::AddGroundFromNet);
+this->setAutoFillBackground(true);
+
+    QPalette palette;
+    palette.setBrush(QPalette::Background, QBrush(QPixmap("/home/zoring/WeChat/Mysoft/image/1.jpg")));
+ this->setPalette(palette);
 
 }
 
@@ -28,12 +35,17 @@ connect(this->NetToshow,&NetMsgToShow::GroundsMsgFormService,this,&PersonList::G
 bool PersonList::StaticMainWindow(){
     groupMenu = new QMenu();
        blankMenu = new QMenu();
+       personMenu = new QMenu();
        QAction *addGroup = new QAction("添加分组", this);
            QAction *delGroup = new QAction("删除该组", this);
            QAction *rename = new QAction("重命名", this);
-           blankMenu->addAction(addGroup);
-              groupMenu->addAction(delGroup);
-              groupMenu->addAction(rename);
+           QAction *addBuddy = new QAction("添加好友",this);
+               QAction *delBuddy = new QAction("删除好友", this);
+               blankMenu->addAction(addGroup);
+                   groupMenu->addAction(delGroup);
+                   groupMenu->addAction(rename);
+                   groupMenu->addAction(addBuddy);
+                   personMenu->addAction(delBuddy);
 
 
   Hlayout = new QHBoxLayout();
@@ -48,7 +60,7 @@ StaticLists = new QVBoxLayout();
   layoutBox->addLayout(StaticLists);
  this->setLayout(layoutBox);
  this->show();
-
+ connect(addGroup,&QAction::triggered,this,&PersonList::AddGround);
  return true ;
 }
 
@@ -70,6 +82,7 @@ bool PersonList::StaticList(int GroundId, vector<string> friendsMsg){
          {string username = (*iter);
              int usrId = atoi(userid.c_str());
              PersonGroundItem*  GroundMembers = new PersonGroundItem(NetToshow,usrId,username.c_str(),"erf",FriendChatMap);
+             FriendDate[usrId] = GroundMembers;
              GroundMsg* Ground =  GroundMsgMap[GroundId] ;
              GroundMemberMapGround[usrId] = Ground;
              Ground->AddGroundMember(usrId,GroundMembers);
@@ -97,7 +110,7 @@ bool PersonList::StaticGround( vector<string> GroundMsgs){
               GroundMsg* Grond = new GroundMsg(GroundName,GroundId);
                QString QGroundName(GroundName.c_str());
              QLabel* ShowGroundName= new QLabel(QGroundName);
-                ShowGroundName->setStyleSheet("QLabel { background-color : red; color : blue; }");
+              //  ShowGroundName->setStyleSheet("QLabel { background-color : blach; color : blue; }");
               ShowGroundName->setSizeIncrement(QSize(50,80));
              GroundMsgMap[GroundId] =Grond;
              GroundsNameMap[ShowGroundName] = GroundId ;
@@ -111,11 +124,18 @@ bool PersonList::StaticGround( vector<string> GroundMsgs){
 }
 
 //添加新的组
-bool PersonList::AddGround(string GroundName){
-    QString QGroundName = QString(QString::fromLocal8Bit(GroundName.c_str()));
+void PersonList::AddGroundFromNet(int Groundid,string GroundName){
+ if( !Groundid )
+     return;
+ GroundMsg* Grond = new GroundMsg(GroundName,Groundid);
+  QString QGroundName(GroundName.c_str());
+QLabel* ShowGroundName= new QLabel(QGroundName);
 
-
-
+ ShowGroundName->setSizeIncrement(QSize(50,80));
+GroundMsgMap[Groundid] =Grond;
+GroundsNameMap[ShowGroundName] = Groundid ;
+StaticLists->addWidget(ShowGroundName);
+StaticLists->addWidget(Grond);
 }
 
 //bool PersonList::DelGround(PersonGroundItem Grounds){
@@ -137,7 +157,7 @@ void PersonList::GetFriendsMsg(int GroundId,vector<string> Msg){
 
 void PersonList::ReviceMegFromNet(int userId, string Meg,string UserName){
 
-
+    FriendDate[userId]->PushBackNotReadMsg(Meg, UserName);
 }
 
 
@@ -147,21 +167,45 @@ void PersonList::GetGroundMsg(vector<string> Msg){
 
 void PersonList::contextMenuEvent(QContextMenuEvent *event){
     QWidget::contextMenuEvent(event);
-
+    if(currentItem==NULL)                           //如果点击到的是空白处
+        {
+            blankMenu->exec(QCursor::pos());
+            return;
+        }
+        if(GroundsNameMap.find(currentItem) != GroundsNameMap.end())    // 如果点击到的是组
+            groupMenu->exec(QCursor::pos());
+        else                                            //否则点击到的是好友
+            personMenu->exec(QCursor::pos());
 
 }
 
 
 void PersonList::mousePressEvent(QMouseEvent *event){
     QWidget::mousePressEvent(event);
-   int x= event->globalPos().rx(),y =event->globalPos().ry();
     currentItem =  this->childAt(mapFromGlobal(QCursor::pos()) )  ; //鼠标位置的Item，不管右键左键都获取
-
      if(event->button()==Qt::LeftButton && currentItem!=NULL && (GroundsNameMap.find(currentItem) != GroundsNameMap.end()))//如果点击的左键并且是点击的是组
      {
-         cout<<"OPen"<<endl;
+
           int groundid =  GroundsNameMap[currentItem] ;
           GroundMsgMap[groundid]->OpendOrCloseGround();
           this->update();
      }
+}
+
+
+void PersonList::AddGround(bool isok){
+
+    groupNameEdit = new QLineEdit();
+    StaticLists->addWidget(groupNameEdit);
+    connect(this->groupNameEdit,&QLineEdit::editingFinished,this,&PersonList::ReGroundname);
+}
+
+
+void PersonList::ReGroundname(){
+    QString NewName = groupNameEdit->displayText();
+    StaticLists->removeWidget(groupNameEdit);
+    disconnect(this->groupNameEdit,&QLineEdit::textChanged,this,&PersonList::ReGroundname);
+    delete groupNameEdit;
+    groupNameEdit = NULL;
+    NetToshow->SendMsgToNet(cmmddata.AddGroundCmmd,0,NewName.toStdString());
 }

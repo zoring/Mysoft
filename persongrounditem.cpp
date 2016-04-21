@@ -13,6 +13,7 @@
 #include "QHBoxLayout"
 #include "netmsgtoshow.h"
 #include "chatdialog.h"
+
 using namespace std;
 PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const char* UesrName, char* SignWord, map<int, ChatDialog*>  &FriendChatMap,char* ImageUrl,
                                   QWidget *parent):QWidget(parent), NetToShow(NetToShow),FriendChatMap(FriendChatMap),UserId(UserId)
@@ -30,16 +31,22 @@ PersonGroundItem::PersonGroundItem(NetMsgToShow *NetToShow,int UserId, const cha
     {
         ImageUrl = "./1.png";
     }
-   ImageUrl = "/home/zoring/WeChat/1.png";
-
+   ImageUrl = "/home/zoring/WeChat/Mysoft/image/1.png";
     this->ImageUrl = ImageUrl;
-    this->PersonImage = new QWidget(this);
+
+    this->PersonImage = new QLabel(this);
+  PersonImage->setScaledContents(true);
+
+
+       PersonImage->setPixmap(QPixmap("/home/zoring/WeChat/Mysoft/image/1.png"));
+
+
     PersonImage->setFixedSize(40,40);
     PersonImage->move(7,7);
    UserName->move(54,10);
    SiginWord->move(54,27);
 
-  PersonImage->installEventFilter(this);
+  //PersonImage->installEventFilter(this);
 
 
 }
@@ -48,6 +55,7 @@ void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
     if(event->button() == Qt::LeftButton) {
         if (FriendChatMap.find(UserId) == FriendChatMap.end())
         {ChatDialog* test =  new ChatDialog(NetToShow,this);
+
          test->show();
          FriendChatMap[UserId] = test;
           test->activateWindow();
@@ -55,6 +63,7 @@ void PersonGroundItem::mouseDoubleClickEvent (QMouseEvent *event){
         }
         else
         {
+            FriendChatMap[UserId]->show();
             FriendChatMap[UserId]->activateWindow();;
 
         }
@@ -118,3 +127,4 @@ vector<string>& PersonGroundItem::PopNotReadMsg(){
 const int PersonGroundItem::GetUserId(){
     return UserId;
 }
+

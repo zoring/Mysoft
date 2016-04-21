@@ -5,7 +5,8 @@
 class ElumData
 {
 public:
-    enum {SightInCmmd ,LoginCmmd,ChatCmmd};
+    enum {SightInCmmd ,LoginCmmd,ChatCmmd,AddGroundCmmd,DeleteGroundCmmd,AddFriendCmmd,DeleteFriendCmmd,
+         FindFriendscmmd};
     ElumData();
 };
 

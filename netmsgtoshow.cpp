@@ -22,6 +22,9 @@ bool NetMsgToShow::SendMsg(const int ReviceId, const string msg){
 
 }
 
+void NetMsgToShow::SendMsgToNet(const int cmmd, const int ReviceId, const string Msg){
+    WeCtrol->SendMsgToNet(cmmd,0,ReviceId,"",Msg);
+}
 
 void NetMsgToShow::LoginShow(){
 
@@ -50,4 +53,8 @@ string NetMsgToShow::GetUserName(){
 
 void NetMsgToShow::LoadGroundsMsg(vector<string> Msg){
     emit GroundsMsgFormService(Msg);
+}
+
+void NetMsgToShow::GetNewGroundName(int groundid, string new_groundname){
+    emit GroundRename(groundid,new_groundname);
 }

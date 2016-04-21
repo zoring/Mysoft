@@ -12,6 +12,7 @@ public:
     vector<boost::shared_ptr<string> > LoadUserFriends(int UserId,int groundsid);
     vector<boost::shared_ptr<string> > LoadGroundMsg(int UserId);
 
+
 private :
     bool CanSigUP(string username);
 };

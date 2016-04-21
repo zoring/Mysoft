@@ -14,7 +14,7 @@ class ChatDialog;
 
 #ifndef PERSONGROUNDITEM_H
 #define PERSONGROUNDITEM_H
-
+#include <iostream>
 #include <QListWidget>
 #include <list>
 #include <vector>
@@ -39,6 +39,7 @@ public:
     const int GetUserId();
     protected:
     void mouseDoubleClickEvent (QMouseEvent *event);
+public slots:
 
 private:
      vector<string> NotReadMsg;
@@ -47,7 +48,7 @@ private:
      map<int, ChatDialog*>  &FriendChatMap;
     QLabel *UserName;  //用户名
     QLabel *SiginWord;  //个性签名
-    QWidget *PersonImage;//用户头像
+    QLabel *PersonImage;//用户头像
     string ImageUrl;
     NetMsgToShow *NetToShow;
 

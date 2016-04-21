@@ -53,7 +53,7 @@ bool LoginDB::SightUP(string Username, string PasswirdValue){
     if (!CanSigUP(Username))
         return false ;
     string Msg = "insert user values (null,'"+ Username +"' , '"+ PasswirdValue + "'); ";
-    cout<<Msg<<endl;
+
     if (mysql_query(Coon.get(), Msg.data()))
         return false;
     return true ;

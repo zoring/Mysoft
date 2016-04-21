@@ -21,7 +21,8 @@ SOURCES += main.cpp \
     serchservice.cpp \
     updateservice.cpp \
     inserservice.cpp \
-    deleteservice.cpp
+    deleteservice.cpp \
+    userdbservice.cpp
 
 HEADERS += \
     wechatservice.h \
@@ -41,6 +42,7 @@ HEADERS += \
     serchservice.h \
     updateservice.h \
     inserservice.h \
-    deleteservice.h
+    deleteservice.h \
+    userdbservice.h
 
 LIBS +=  -lboost_system -lboost_thread -lmysqlclient -lboost_signals

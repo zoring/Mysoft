@@ -10,6 +10,7 @@
 #include <string>
 #include "dbcontrol.h"
 #include "logincontrol.h"
+#include "userservice.h"
 #include <boost/function.hpp>
 #include "elumdata.h"
 using namespace boost::asio;
@@ -52,10 +53,7 @@ public:
 
 
 private:
-        void LoadGroundMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-        void LoadFriendsMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0,int groundid=0);
-        void SightUp(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
-         void CheackLogin(int cmmd,int UserId = 0, int TargetId= 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket= 0) ;
+
          void SerchMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
          void SendIndiviMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0);
          void SendGroundMsg(int cmmd,int UserId = 0, int TargetId = 0,string userName="",string Msg = "", boost::shared_ptr<tcp::socket> psocket =0) ;
@@ -68,7 +66,7 @@ private:
 
      //信息的ｓｅｒｖｉｃｅ和　功能的ｓｅｒｖｉｃｅ
      io_service &message_iosev ;
-     io_service &Funtion_iosev;
+     io_service  &Funtion_iosev;
 
      //端口
      ip::address IpAddress = ip::address::from_string("127.0.0.1");  //ｓｅｒｖｉｃｅ地址
@@ -82,12 +80,10 @@ private:
      //相关辅助记录
      map<int, Tcp_Socket_ptr> AlwaysUserMap;
      ip::tcp::acceptor tcp_acceptor;
-     DBControl* dbControl;
-     LoginControl* loginControl;
      int  AllCmd;
      vector< boost::function<void (int ,int , int , string, string, boost::shared_ptr<tcp::socket>)> > WeChatfuntions;
      ElumData elumdata;
-
+    UserService myuserservice;
 };
 
 #endif // WECHATSERVICE_H

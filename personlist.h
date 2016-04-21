@@ -13,13 +13,14 @@ class NetMsgToShow;
 #include <vector>
 #include <QMenu>
 #include <QLabel>
+#include "elumdata.h"
 class PersonList : public QWidget
 {
 
 public:
     explicit PersonList(NetMsgToShow *NetToshow,QWidget *parent = 0);
     bool StaticMainWindow();
-    bool AddGround(std::string GroundName); //增加组
+
 
     //bool DelGround(PersonGroundItem Grounds);//删除组
 public slots:
@@ -29,10 +30,17 @@ public slots:
      void GetGroundMsg(vector<string> Msg);
      void contextMenuEvent(QContextMenuEvent *event) ;
      void mousePressEvent(QMouseEvent *event);
+    void AddGround(bool isok);
+    void DeleteGround();
+    void AddFriends();
+    void DeleteFriends();
+      void ReGroundname();
+      void AddGroundFromNet(int Groundid,std::string GroundName); //增加组
 private:
     int UserId;
     void ReStaticGoundMsg();
      map<int, ChatDialog*>  FriendChatMap;
+     map<int,PersonGroundItem*> FriendDate;
     map<int , GroundMsg*>  GroundMsgMap;
     map<int, GroundMsg*> GroundMemberMapGround;
     map<QWidget*,  int> GroundsNameMap;
@@ -48,8 +56,10 @@ private:
     QPushButton* GroundButton ;
     QMenu *blankMenu;//点击空白上的菜单
        QMenu *groupMenu;//点击组上的菜单
+        QMenu *personMenu;
       QLineEdit *groupNameEdit;//组的名字，重命名的时候需要用到
         QWidget *currentItem;//当前的项
+        ElumData cmmddata;
 signals:
 
 

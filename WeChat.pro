@@ -26,7 +26,9 @@ SOURCES += main.cpp\
     chatbuffer.cpp \
     netmsgtoshow.cpp \
     friendsbuffer.cpp \
-    groundmsg.cpp
+    groundmsg.cpp \
+    elumdata.cpp \
+    findfriends.cpp
 
 HEADERS  += mainwindow.h \
     logindialog.h \
@@ -42,13 +44,16 @@ HEADERS  += mainwindow.h \
     wechatcontrol.h \
     chatbuffer.h \
     friendsbuffer.h \
-    groundmsg.h
+    groundmsg.h \
+    elumdata.h \
+    findfriends.h
 
 FORMS    += mainwindow.ui \
     logindialog.ui \
     resigndialog.ui \
     frienddialog.ui \
-    chatdialog.ui
+    chatdialog.ui \
+    findfriends.ui
 LIBS +=  -lboost_system -lboost_thread
 
 DISTFILES += \

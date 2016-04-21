@@ -34,9 +34,58 @@ bool BaseDB::UpDateMsg(string Tab, string key, string value, string other){
 }
 
 
+bool BaseDB::IsExit(string Tab, string key, string value){
+    string Msg = "select * from " + Tab + " where " + key + " = " + value;
+    if (mysql_query(Coon.get(), Msg.data()))
+        {
+
+            return false;
+        }
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+     res = mysql_use_result(Coon.get());
+     if ((row = mysql_fetch_row(res)) != NULL)
+     {    mysql_free_result(res);
+         return true;
+     }
+
+     mysql_free_result(res);
+        return false;
+}
+
 string BaseDB::IntToString(int number){
     std::stringstream ss;
     ss << number;
     std::string str = ss.str();
     return str;
+}
+
+
+vector<string> BaseDB::ReturnGroundBySqlstring(string sqlstatement){
+     vector< string> Buffer;
+     string buffer;
+     if (mysql_query(Coon.get(), sqlstatement.data()))
+         {
+
+             return Buffer ;
+         }
+     MYSQL_RES *res;
+     MYSQL_ROW row;
+     res = mysql_use_result(Coon.get());
+
+
+     while ((row = mysql_fetch_row(res)) != NULL)
+     {
+          for (int i = 0; i< mysql_num_fields(res);i++)
+          {
+
+             buffer = row[i];
+              Buffer.push_back(buffer);
+
+          }
+
+     }
+
+     mysql_free_result(res);
+     return Buffer;
 }
